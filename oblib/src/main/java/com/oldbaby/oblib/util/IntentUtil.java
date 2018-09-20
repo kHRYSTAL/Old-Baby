@@ -1,0 +1,89 @@
+package com.oldbaby.oblib.util;
+
+import android.content.Context;
+import android.content.Intent;
+import android.graphics.Bitmap;
+import android.net.Uri;
+import android.provider.MediaStore;
+import android.provider.Settings;
+
+import java.io.File;
+
+public class IntentUtil {
+
+    /**
+     * 发送邮件
+     */
+    public static void intentToSendMail(Context context, String email) {
+        Intent i = new Intent();
+        i.setAction(Intent.ACTION_SENDTO);
+        i.setData(Uri.parse("mailto:" + email));
+        try {
+            context.startActivity(i);
+        } catch (Exception e) {
+            ToastUtil.showShort("该设备不支持发邮件");
+        }
+    }
+
+    /**
+     * 打电话
+     */
+    public static void dialTo(Context context, String num) {
+        Intent i = new Intent();
+        i.setAction(Intent.ACTION_DIAL);
+        i.setData(Uri.parse("tel:" + num));
+        try {
+            context.startActivity(i);
+        } catch (Exception e) {
+            ToastUtil.showShort("该设备不支持拨打电话功能");
+        }
+    }
+
+    /**
+     * 发短信
+     */
+    public static Intent sendSmsWithBody(String number, String body) {
+        Intent sendIntent = new Intent(Intent.ACTION_SENDTO);
+        sendIntent.setData(Uri.parse("smsto:" + number));
+        sendIntent.putExtra("sms_body", body);
+        return sendIntent;
+    }
+
+    /**
+     * 跳转系统权限设置界面
+     */
+    public static void intentToSystemSetting(Context context) {
+        Intent intent = new Intent(Settings.ACTION_SETTINGS);
+        context.startActivity(intent);
+    }
+
+    public static Intent intentToSelectVideo() {
+        Intent innerIntent = new Intent(Intent.ACTION_GET_CONTENT);
+        innerIntent.setType("video/*");
+        Intent wrapperIntent = Intent.createChooser(innerIntent, null);
+        return wrapperIntent;
+    }
+
+    /**
+     * 系统拍照
+     */
+    public static Intent intentToCaptureImage(String filepath) {
+        Intent cameraIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+        cameraIntent.putExtra(MediaStore.EXTRA_OUTPUT,
+                Uri.fromFile(new File(filepath)));
+        return cameraIntent;
+    }
+
+    public static Intent cropIntent(Uri inUri, int outputX, int outputY, Uri outUri) {
+        Intent cropIntent = new Intent("com.android.camera.action.CROP");
+        cropIntent.setDataAndType(inUri, "image/*");
+        cropIntent.putExtra("crop", "true");
+        cropIntent.putExtra("aspectX", outputX);
+        cropIntent.putExtra("aspectY", outputY);
+        cropIntent.putExtra("scale", true);
+        cropIntent.putExtra(MediaStore.EXTRA_OUTPUT, outUri);
+        cropIntent.putExtra("outputFormat", Bitmap.CompressFormat.JPEG.toString());
+        cropIntent.putExtra("return-data", false);
+        return cropIntent;
+    }
+}

@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <color name="transparent">#00000000</color>
+    <color name="white">#ffffffff</color>
+    <color name="app_background">#ffffffff</color>
+    <color name="dark">#ff222222</color>
+
+    <color name="tab_highlight">#ff018e4e</color>
+    <color name="title_drop">#ff303337</color>
+    <color name="drop_text_focus">#81c2fc</color>
+
+    <!-- app color -->
+    <color name="color_sc">#FFCEAD7E</color>
+    <color name="color_sc_p">#ffC09251</color>
+    <color name="color_sc_d">#4cCEAD7E</color>
+    <color name="color_xt">#ff5B5755</color>
+    <color name="color_xt2">#ff8C8582</color>
+    <color name="color_xt3">#ffD0CAC7</color>
+    <color name="color_cc">#ffF9F5EE</color>
+    <color name="color_hp">#ff917349</color>
+    <color name="color_f1">#de000000</color>
+    <color name="color_f2">#8a000000</color>
+    <color name="color_f3">#4d000000</color>
+    <color name="color_pg">#ffF6F6F6</color>
+    <color name="color_div">#1A000000</color>
+
+    <color name="color_dc">#ff3aa978</color>
+    <color name="color_dc2">#ff87CAAD</color>
+    <color name="color_dc3">#663aa978</color>
+    <color name="color_dc_p">#ff2E8760</color>
+    <color name="color_ac">#ffFE3824</color>
+    <color name="color_ac_p">#ffC32820</color>
+    <color name="color_bc">#ff30AACB</color>
+    <color name="color_bc_p">#ff52869D</color>
+    <color name="color_f4">#ffD9D9D9</color>
+    <color name="color_bg1">#ffffffff</color>
+    <color name="color_bg1_p">#E5E5E5</color>
+    <color name="color_bg2">#ffF2F2F2</color>
+    <color name="color_bg3">#ff000000</color>
+    <color name="color_bg4">#ffBFBFBF</color>
+    <color name="color_desc">#ff9fa9af</color>
+    <color name="color_dc_grey">#dcdcdc</color>
+    <color name="color_em">#ffe7e7e7</color>
+    <color name="color_btn">#ff8e8e8e</color>
+    <!-- app_color -->
+
+    <!--chat indicator-->
+    <color name="chat_indicator_select">#CEAC7E</color>
+    <color name="chat_indicator_unselect">#1A000000</color>
+    <!--chat indicator-->
+</resources>

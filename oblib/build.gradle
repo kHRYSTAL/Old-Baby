@@ -1,0 +1,35 @@
+apply plugin: 'com.android.library'
+
+android {
+
+    compileSdkVersion rootProject.compileSdkVersion
+    defaultConfig {
+        minSdkVersion rootProject.minSdkVersion
+        targetSdkVersion rootProject.targetSdkVersion
+    }
+
+    lintOptions {
+        abortOnError false
+    }
+
+
+    packagingOptions {
+        exclude 'META-INF/DEPENDENCIES'
+        exclude 'META-INF/NOTICE'
+        exclude 'META-INF/LICENSE'
+        exclude 'META-INF/LICENSE.txt'
+        exclude 'META-INF/NOTICE.txt'
+    }
+}
+
+dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    implementation project(':pulllib')
+    implementation rootProject.supportV7
+    implementation rootProject.recyclerView
+    implementation rootProject.multiDex
+    implementation rootProject.rxjava
+    implementation rootProject.rxlifecycle
+    implementation rootProject.pinyin4j
+    implementation rootProject.converterGson
+}
