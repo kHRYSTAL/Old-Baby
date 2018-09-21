@@ -1,5 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <style name="AppBaseTheme" parent="Theme.AppCompat.Light.NoActionBar">
+        <!--新增属性 statusbar颜色-->
+        <item name="colorPrimaryDark">@android:color/black</item>
+        <!--新增属性 button去掉阴影-->
+        <item name="android:buttonStyle">@style/Widget.AppCompat.Button.Borderless</item>
+    </style>
+
+    <style name="AppTheme" parent="AppBaseTheme"></style>
+
     <style name="PROGRESS_DIALOG" parent="@android:style/Theme.Dialog">
         <item name="android:windowFrame">@null</item>
         <item name="android:windowIsFloating">true</item>
