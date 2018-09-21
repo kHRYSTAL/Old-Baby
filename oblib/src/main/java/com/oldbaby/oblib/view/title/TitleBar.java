@@ -276,7 +276,7 @@ public class TitleBar implements View.OnClickListener {
         return titleText;
     }
 
-    public void setBackGroup(int bgResId) {
+    public void setBackgroud(int bgResId) {
         this.titleLayout.setBackgroundResource(bgResId);
     }
 
