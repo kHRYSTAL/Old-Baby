@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="ImageText">
+        <attr name="itSrc" format="reference" />
+        <attr name="itText" format="reference|string" />
+        <attr name="textColor" format="reference|color" />
+        <attr name="textSize" format="reference|integer" />
+        <attr name="imageSize" format="integer" />
+    </declare-styleable>
+    <declare-styleable name="TabBar">
+        <attr name="tbIndicator" format="reference" />
+        <attr name="tbMode">
+            <flag name="avg" value="0x0" />
+            <flag name="wrap" value="0x1" />
+            <flag name="wrap_fill" value="0x2" />
+        </attr>
+        <attr name="tbDivider" format="boolean" />
+    </declare-styleable>
+</resources>

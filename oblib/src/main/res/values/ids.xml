@@ -12,4 +12,6 @@
     <!-- fragment ids -->
     <item name="frag_container" type="id" />
     <item name="frag_container_rl" type="id" />
+    <item name="frag_tab_page_tab" type="id" />
+    <item name="frag_tab_page_container" type="id" />
 </resources>
