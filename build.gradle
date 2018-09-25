@@ -45,4 +45,7 @@ ext {
     pinyin4j = 'com.belerweb:pinyin4j:2.5.1'
     gson = 'com.google.code.gson:gson:2.6.2'
 
+    ormliteAndroid = 'com.j256.ormlite:ormlite-android:4.48'
+    ormliteCore = 'com.j256.ormlite:ormlite-core:4.48'
+
 }

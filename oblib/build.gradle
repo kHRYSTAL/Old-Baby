@@ -25,11 +25,13 @@ android {
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation project(':pulllib')
-    implementation rootProject.supportV7
-    implementation rootProject.recyclerView
-    implementation rootProject.multiDex
+    compile rootProject.supportV7
+    compile rootProject.recyclerView
+    compile rootProject.multiDex
     implementation rootProject.rxjava
     implementation rootProject.rxlifecycle
     implementation rootProject.pinyin4j
     implementation rootProject.converterGson
+    implementation rootProject.ormliteAndroid
+    implementation rootProject.ormliteCore
 }

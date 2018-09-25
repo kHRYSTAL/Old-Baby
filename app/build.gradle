@@ -20,5 +20,4 @@ android {
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation project(':oblib')
-    implementation rootProject.supportV7
 }
