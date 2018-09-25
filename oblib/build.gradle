@@ -28,10 +28,10 @@ dependencies {
     compile rootProject.supportV7
     compile rootProject.recyclerView
     compile rootProject.multiDex
-    implementation rootProject.rxjava
-    implementation rootProject.rxlifecycle
-    implementation rootProject.pinyin4j
-    implementation rootProject.converterGson
-    implementation rootProject.ormliteAndroid
-    implementation rootProject.ormliteCore
+    compile rootProject.rxjava
+    compile rootProject.rxlifecycle
+    compile rootProject.pinyin4j
+    compile rootProject.converterGson
+    compile rootProject.ormliteAndroid
+    compile rootProject.ormliteCore
 }
