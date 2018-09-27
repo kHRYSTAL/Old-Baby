@@ -9,7 +9,6 @@ buildscript {
     }
     dependencies {
         classpath 'com.android.tools.build:gradle:3.1.2'
-        
 
         // NOTE: Do not place your application dependencies here; they belong
         // in the individual module build.gradle files
@@ -19,6 +18,9 @@ buildscript {
 allprojects {
     repositories {
         mavenLocal()
+        maven { url "https://jitpack.io" }
+        maven { url "http://maven.aliyun.com/nexus/content/groups/public/" }
+        maven { url 'http://maven.oschina.net/content/groups/public/' }
         google()
         jcenter()
     }
@@ -29,7 +31,7 @@ ext {
     versionName = '0.0.1'
     versionCode = 1
     //android 配置
-    minSdkVersion = 14
+    minSdkVersion = 16
     compileSdkVersion = 27
     targetSdkVersion = 27
     supportV7 = 'com.android.support:appcompat-v7:27.1.1'
@@ -47,5 +49,7 @@ ext {
 
     ormliteAndroid = 'com.j256.ormlite:ormlite-android:4.48'
     ormliteCore = 'com.j256.ormlite:ormlite-core:4.48'
+    mmkv = 'com.tencent:mmkv:1.0.10'
+    jiaozi = 'cn.jzvd:jiaozivideoplayer:6.3.1'
 
 }
