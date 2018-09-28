@@ -106,10 +106,13 @@ public abstract class BaseFragmentActivity extends AppCompatActivity implements 
         inflater = LayoutInflater.from(getApplicationContext());
         lifeProvider.onNext(ActivityEvent.CREATE);
         confirmDlgMgr = ((OGApplication) getApplication()).createConfirmDlgMgr();
-        confirmDlgMgr.setListener(this);
+        if (confirmDlgMgr != null)
+            confirmDlgMgr.setListener(this);
         progressDlgMgr = ((OGApplication) getApplication()).createProgressDlgMgr();
-        progressDlgMgr.setListener(this);
-        promptDlgMgr = ((OGApplication) getApplication()).createPromptDlgMgr();
+        if (progressDlgMgr != null) {
+            progressDlgMgr.setListener(this);
+            promptDlgMgr = ((OGApplication) getApplication()).createPromptDlgMgr();
+        }
         tipsDlgMgr = ((OGApplication) getApplication()).createTipsDlgMgr();
         multiBtnDlgMgr = ((OGApplication) getApplication()).createMultiBtnDlgMgr();
         RxBus.getDefault().toObservable(EBAppBackAndFore.class)

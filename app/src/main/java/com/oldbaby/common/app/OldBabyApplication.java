@@ -3,6 +3,7 @@ package com.oldbaby.common.app;
 import android.content.Context;
 
 import com.oldbaby.common.app.lifecycle.LifeCycleMgr;
+import com.oldbaby.common.dto.DBMgr;
 import com.oldbaby.oblib.component.application.AppConfig;
 import com.oldbaby.oblib.component.application.OGApplication;
 import com.oldbaby.oblib.component.frag.FragBase;
@@ -12,7 +13,11 @@ import com.oldbaby.oblib.view.dialog.IMultiBtnDlgMgr;
 import com.oldbaby.oblib.view.dialog.IProgressDlgMgr;
 import com.oldbaby.oblib.view.dialog.IPromptDlgMgr;
 import com.oldbaby.oblib.view.dialog.ITipsDlgMgr;
+import com.oldbaby.oblib.view.pulltorefresh.cache.IPullCache;
+import com.oldbaby.oblib.view.pulltorefresh.cache.PullToRefreshCache;
 import com.oldbaby.tracker.util.TrackerMgr;
+
+import java.io.Serializable;
 
 /**
  * usage:
@@ -65,7 +70,18 @@ public class OldBabyApplication extends OGApplication {
     }
 
     private void configPullToRefresh() {
+        PullToRefreshCache.setCacheUtil(new IPullCache() {
 
+            @Override
+            public Object getCache(String cacheKey) {
+                return DBMgr.getMgr().getCacheDao().get(cacheKey);
+            }
+
+            @Override
+            public void cacheData(String cacheKey, Serializable data) {
+                DBMgr.getMgr().getCacheDao().set(cacheKey, data);
+            }
+        });
     }
 
     private void configRetrofit() {

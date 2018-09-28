@@ -8,6 +8,8 @@ android {
         targetSdkVersion rootProject.targetSdkVersion
         versionName rootProject.versionName
         versionCode rootProject.versionCode
+
+        javaCompileOptions { annotationProcessorOptions { includeCompileClasspath = true } }
     }
     buildTypes {
         release {
@@ -22,4 +24,8 @@ dependencies {
     implementation project(':oblib')
     implementation rootProject.mmkv
     implementation rootProject.jiaozi
+    implementation rootProject.butterknife
+    annotationProcessor rootProject.butterknifecompile
+    implementation rootProject.glide
+    annotationProcessor rootProject.glidecompile
 }

@@ -3,4 +3,100 @@
     <color name="colorPrimary">#3F51B5</color>
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#FF4081</color>
+
+    <!-- common colos -->
+    <color name="black">#ff000000</color>
+    <color name="white">#ffffffff</color>
+    <color name="red">#ffff0000</color>
+    <!-- common colos -->
+
+
+    <!-- text, hint color -->
+    <color name="txt_light_gray">#ff959595</color>
+    <color name="txt_dark_gray">#ff666666</color>
+    <color name="txt_black">#ff333333</color>
+    <color name="txt_blue">#ff0080cb</color>
+
+    <!-- background color -->
+
+
+    <!-- line, border, divider color -->
+    <color name="line_gray">#ffb3b3b3</color>
+
+    <!-- no common colors -->
+
+    <!-- app color -->
+    <color name="color_sc">#FFCEAD7E</color>
+    <color name="color_sc_p">#ffC09251</color>
+    <color name="color_sc_d">#4cCEAD7E</color>
+    <color name="color_xt">#ff5B5755</color>
+    <color name="color_xt2">#ff8C8582</color>
+    <color name="color_xt3">#ffD0CAC7</color>
+    <color name="color_cc">#ffF9F5EE</color>
+    <color name="color_hp">#ff917349</color>
+    <color name="color_f1">#de000000</color>
+    <color name="color_f2">#8a000000</color>
+    <color name="color_f3">#4d000000</color>
+    <color name="color_pg">#ffF6F6F6</color>
+    <color name="color_div">#1A000000</color>
+    <color name="color_div2">#12000000</color>
+
+    <color name="color_dc">#ff3aa978</color>
+    <color name="color_dc2">#ff87CAAD</color>
+    <color name="color_dc3">#663aa978</color>
+    <color name="color_dc_p">#ff2E8760</color>
+    <color name="color_ac">#ffFE3824</color>
+    <color name="color_ac_p">#ffC32820</color>
+    <color name="color_bc">#ff30AACB</color>
+    <color name="color_bc_p">#ff52869D</color>
+    <color name="color_f4">#ffD9D9D9</color>
+    <color name="color_bg1">#ffffffff</color>
+    <color name="color_bg1_p">#E5E5E5</color>
+    <color name="color_bg2">#ffF2F2F2</color>
+    <color name="color_bg2_30">#4DF2F2F2</color>
+    <color name="color_bg3">#ff000000</color>
+    <color name="color_bg4">#ffBFBFBF</color>
+    <color name="color_desc">#ff9fa9af</color>
+    <color name="color_dc_grey">#dcdcdc</color>
+    <color name="color_em">#ffe7e7e7</color>
+    <color name="color_btn">#ff8e8e8e</color>
+    <color name="color_sg">#ffeaeaea</color>
+    <color name="color_or">#FFF9A41C</color>
+    <color name="color_or_p">#CCF9A41C</color>
+    <color name="color_cs">#EF9F37</color>
+    <color name="color_weak_or_60">#99F1B62C</color>
+    <color name="color_weak_or_30">#4DF1B62C</color>
+    <color name="color_weak_or_20">#33F1B62C</color>
+    <!-- app_color -->
+
+    <color name="color_event_price_tag_ora">#ff8c31</color>
+    <color name="letter_tile_font_color">#ffffff</color>
+    <color name="tabbar_text_sel_color">#d8C09251</color>
+    <color name="bg_profile_empty">#FFD8D8D8</color>
+
+    <!-- 透明度颜色值 -->
+    <color name="color_dc_30">#4c3aa978</color>
+    <color name="color_dc_90">#E53aa978</color>
+    <color name="translate_60">#96000000</color>
+    <color name="color_div_60">#96e6e6e6</color>
+    <color name="color_white_15">#21ffffff</color>
+    <color name="color_white_20">#33ffffff</color>
+    <color name="color_white_25">#3fffffff</color>
+    <color name="color_white_30">#4Dffffff</color>
+    <color name="color_white_50">#7fffffff</color>
+    <color name="color_white_70">#B2ffffff</color>
+    <color name="color_white_80">#CCffffff</color>
+    <color name="color_white_85">#d8ffffff</color>
+    <color name="color_white_90">#e5ffffff</color>
+    <color name="color_black_15">#21000000</color>
+    <color name="color_black_20">#33000000</color>
+    <color name="color_black_25">#3f000000</color>
+    <color name="color_black_30">#4D000000</color>
+    <color name="color_black_40">#66000000</color>
+    <color name="color_black_45">#72000000</color>
+    <color name="color_black_50">#7f000000</color>
+    <color name="color_black_60">#99000000</color>
+    <color name="color_black_70">#b2000000</color>
+    <color name="color_black_80">#CC000000</color>
+    <!-- 透明度颜色值 -->
 </resources>
