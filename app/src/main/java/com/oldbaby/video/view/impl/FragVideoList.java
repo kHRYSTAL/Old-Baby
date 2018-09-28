@@ -14,7 +14,6 @@ import com.oldbaby.common.bean.Feed;
 import com.oldbaby.oblib.mvp.view.pullrefresh.FragPullRecyclerView;
 import com.oldbaby.oblib.mvp.view.pullrefresh.PullRecyclerViewAdapter;
 import com.oldbaby.oblib.mvp.view.pullrefresh.RecyclerViewHolder;
-import com.oldbaby.oblib.util.MLog;
 import com.oldbaby.video.model.VideoListModel;
 import com.oldbaby.video.presenter.VideoListPresenter;
 import com.oldbaby.video.view.IVideoListView;
@@ -124,6 +123,7 @@ public class FragVideoList extends FragPullRecyclerView<Feed, VideoListPresenter
         private int firstVisibleItem = 0;
         private int lastVisibleItem = 0;
         private int visibleCount = 0;
+
         /**
          * 被处理的视频状态标签
          */
@@ -137,6 +137,7 @@ public class FragVideoList extends FragPullRecyclerView<Feed, VideoListPresenter
              */
             TAG_PAUSE_VIDEO
         }
+
         @Override
         public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
             super.onScrollStateChanged(recyclerView, newState);
@@ -148,6 +149,7 @@ public class FragVideoList extends FragPullRecyclerView<Feed, VideoListPresenter
                     break;
             }
         }
+
         @Override
         public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
             super.onScrolled(recyclerView, dx, dy);
@@ -159,6 +161,7 @@ public class FragVideoList extends FragPullRecyclerView<Feed, VideoListPresenter
                 visibleCount = lastVisibleItem - firstVisibleItem;
             }
         }
+
         /**
          * 循环遍历 可见区域的播放器
          * 然后通过 getLocalVisibleRect(rect)方法计算出哪个播放器完全显示出来
@@ -183,6 +186,7 @@ public class FragVideoList extends FragPullRecyclerView<Feed, VideoListPresenter
                 }
             }
         }
+
         /**
          * 视频状态处理
          *
