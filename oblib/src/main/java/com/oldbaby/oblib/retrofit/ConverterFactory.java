@@ -34,7 +34,7 @@ public final class ConverterFactory extends Converter.Factory {
     }
 
     @Override
-    public Converter<ResponseBody, ?> fromResponseBody(Type type, Annotation[] annotations) {
+    public Converter<ResponseBody, ? > fromResponseBody(Type type, Annotation[] annotations) {
         return new ResponseBodyConverter<>(gson, type);
     }
 

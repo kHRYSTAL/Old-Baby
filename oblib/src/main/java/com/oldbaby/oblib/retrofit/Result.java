@@ -9,7 +9,7 @@ import com.google.gson.annotations.SerializedName;
  * update time:
  * email: 723526676@qq.com
  */
-public class BasePyResp<T> {
+public class Result<T> {
 
     @SerializedName("code")
     public int code;

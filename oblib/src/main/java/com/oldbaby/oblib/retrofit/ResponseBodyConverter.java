@@ -1,6 +1,7 @@
 package com.oldbaby.oblib.retrofit;
 
 import com.google.gson.Gson;
+import com.oldbaby.oblib.component.application.OGApplication;
 import com.oldbaby.oblib.util.MLog;
 import com.squareup.okhttp.ResponseBody;
 
@@ -31,7 +32,6 @@ final class ResponseBodyConverter<T> implements Converter<ResponseBody, T> {
             buffer.append(line);
         }
         String responseBody = buffer.toString();
-//        MLog.json(ZHApplication.TAG, responseBody);
         try {
             if (String.class == type) {
                 return (T) responseBody;

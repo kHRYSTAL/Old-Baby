@@ -2,12 +2,18 @@ package com.oldbaby.common.app;
 
 import android.content.Context;
 
+import com.iflytek.cloud.SpeechUtility;
+import com.oldbaby.R;
 import com.oldbaby.common.app.lifecycle.LifeCycleMgr;
 import com.oldbaby.common.dto.DBMgr;
+import com.oldbaby.common.retrofit.HeaderInterceptor;
+import com.oldbaby.common.retrofit.RetrofitFactory;
+import com.oldbaby.common.retrofit.gson.GsonCreater;
 import com.oldbaby.oblib.component.application.AppConfig;
 import com.oldbaby.oblib.component.application.OGApplication;
 import com.oldbaby.oblib.component.frag.FragBase;
 import com.oldbaby.oblib.uri.IUriMgr;
+import com.oldbaby.oblib.util.gson.GsonHelper;
 import com.oldbaby.oblib.view.dialog.IConfirmDlgMgr;
 import com.oldbaby.oblib.view.dialog.IMultiBtnDlgMgr;
 import com.oldbaby.oblib.view.dialog.IProgressDlgMgr;
@@ -16,6 +22,7 @@ import com.oldbaby.oblib.view.dialog.ITipsDlgMgr;
 import com.oldbaby.oblib.view.pulltorefresh.cache.IPullCache;
 import com.oldbaby.oblib.view.pulltorefresh.cache.PullToRefreshCache;
 import com.oldbaby.tracker.util.TrackerMgr;
+import com.tencent.mmkv.MMKV;
 
 import java.io.Serializable;
 
@@ -49,7 +56,7 @@ public class OldBabyApplication extends OGApplication {
     }
 
     private void trackerClick(String pageName, String type, String alias, String param, String userInfo) {
-        // TODO: 18/9/25 TrackerMgr;
+        TrackerMgr.getInstance().trackerClick(pageName, type, alias, param, userInfo);
     }
 
     @Override
@@ -60,13 +67,24 @@ public class OldBabyApplication extends OGApplication {
 
     @Override
     public void onCreate() {
+        configIFlyTek(); // 配置科大讯飞
         super.onCreate();
-        configTinker();
-        configRetrofit();
-        configPullToRefresh();
+        configMMKV(); // 配置微信mmkv 用于shared preference缓存
+        configTinker(); // 配置热修复
+        configRetrofit(); // 配置网络请求
+        configPullToRefresh(); // 配置下拉刷新
         registerActivityLifecycleCallbacks(lifeCycleMgr);
         registerActivityLifecycleCallbacks(new TrackerLifeCycleMgr(OldBabyApplication.this));
-        // TODO GsonHelper
+        GsonHelper.SetCommonGson(GsonCreater.GreateGson());
+    }
+
+    private void configIFlyTek() {
+        SpeechUtility.createUtility(OldBabyApplication.this,
+                String.format("appid=%s", getString(R.string.iflytek_appid)));
+    }
+
+    private void configMMKV() {
+        MMKV.initialize(getApplicationContext());
     }
 
     private void configPullToRefresh() {
@@ -85,7 +103,7 @@ public class OldBabyApplication extends OGApplication {
     }
 
     private void configRetrofit() {
-
+        RetrofitFactory.getInstance().addHeaderInterceptor(new HeaderInterceptor());
     }
 
     private void configTinker() {
@@ -187,6 +205,6 @@ public class OldBabyApplication extends OGApplication {
      * @param type
      */
     private void switchFrontOrBackDesk(String type) {
-        // TODO: 18/9/25
+        // TODO: 18/9/25 common model or tracker model
     }
 }

@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <com.oldbaby.common.view.zoompage.PinchZoomPage
+        android:id="@+id/zoomPage"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+    </com.oldbaby.common.view.zoompage.PinchZoomPage>
+    <com.oldbaby.oblib.view.NetErrorView
+        android:id="@+id/errorView"
+        android:visibility="gone"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+    </com.oldbaby.oblib.view.NetErrorView>
+    <com.oldbaby.oblib.view.EmptyView
+        android:id="@+id/emptyView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+    </com.oldbaby.oblib.view.EmptyView>
+</FrameLayout>

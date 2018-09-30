@@ -15,9 +15,9 @@ import rx.Subscriber;
 
 /**
  * usage: 网络请求实现基类
- *  todo 需要确定django是否返回数据类型都为BasePyResp
- *  todo 需要确定django是否支持自定义错误码 > 200 && < 300认为是错误的
- *  todo 如果支持 错误信息在何处展现
+ * todo 需要确定django是否返回数据类型都为Result
+ * todo 需要确定django是否支持自定义错误码 > 200 && < 300认为是错误的
+ * todo 如果支持 错误信息在何处展现
  * author: kHRYSTAL
  * create time: 18/9/20
  * update time:
@@ -25,25 +25,24 @@ import rx.Subscriber;
  */
 public abstract class AppCallBase<T> implements Observable.OnSubscribe<T> {
 
+    private static final String TAG = AppCallBase.class.getSimpleName();
     // 是否为后台task
     private boolean isBackgroundTask = false;
 
     @Override
     public void call(Subscriber<? super T> subscriber) {
 
-        Response<BasePyResp<T>> response = null;
+        Response<T> response = null;
         Throwable error = null;
         try {
             response = doRemoteCall();
         } catch (Exception e) {
             error = e;
-
         }
-
         try {
             handlerHeaders(response.headers());
         } catch (Exception e) {
-
+            MLog.e(TAG, "headers is null", e, e.getMessage());
         }
 
         if (subscriber.isUnsubscribed()) {
@@ -52,7 +51,7 @@ public abstract class AppCallBase<T> implements Observable.OnSubscribe<T> {
         }
 
         if (response != null && response.isSuccess()) {
-            subscriber.onNext(response.body().data);
+            subscriber.onNext(response.body());
             subscriber.onCompleted();
         } else {
             if (response != null) {
@@ -98,7 +97,7 @@ public abstract class AppCallBase<T> implements Observable.OnSubscribe<T> {
     /**
      * 实际的请求操作，同步
      */
-    protected abstract Response<BasePyResp<T>> doRemoteCall() throws Exception;
+    protected abstract Response<T> doRemoteCall() throws Exception;
 
     /**
      * 处理错误异常

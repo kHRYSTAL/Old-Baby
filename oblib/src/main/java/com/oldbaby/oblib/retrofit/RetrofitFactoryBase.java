@@ -17,6 +17,7 @@ import javax.net.ssl.SSLSession;
 import javax.net.ssl.TrustManager;
 import javax.net.ssl.X509TrustManager;
 
+import retrofit.GsonConverterFactory;
 import retrofit.Retrofit;
 
 public class RetrofitFactoryBase {
@@ -58,6 +59,7 @@ public class RetrofitFactoryBase {
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(baseUrl)
                 .addConverterFactory(ConverterFactory.create(gson))
+//                .addConverterFactory(GsonConverterFactory.create(gson))
                 .client(okHttpClient)
                 .build();
         T apiService = retrofit.create(cls);
