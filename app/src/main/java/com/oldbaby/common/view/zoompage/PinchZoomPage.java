@@ -51,6 +51,7 @@ public class PinchZoomPage extends NestedScrollView implements View.OnClickListe
     private LinearLayout container;
     private List<TextView> textItems;
     private List<ImageView> imageItems;
+    private List<View> allViews;
     private List<String> imagesUrls;
 
     private OnPageItemClickListener onPageItemClickListener;
@@ -78,6 +79,7 @@ public class PinchZoomPage extends NestedScrollView implements View.OnClickListe
                 LinearLayout.LayoutParams.MATCH_PARENT);
         container.setLayoutParams(layoutParams);
         addView(container);
+        allViews = new ArrayList<>();
         textItems = new ArrayList<>();
         imageItems = new ArrayList<>();
         imagesUrls = new ArrayList<>();
@@ -116,6 +118,7 @@ public class PinchZoomPage extends NestedScrollView implements View.OnClickListe
 
     public void setContent(List<PageItem> pageItems) {
         container.removeAllViews();
+        allViews.clear();
         textItems.clear();
         imageItems.clear();
         imagesUrls.clear();
@@ -127,13 +130,16 @@ public class PinchZoomPage extends NestedScrollView implements View.OnClickListe
             PageItem pi = pageItems.get(i);
             if (StringUtil.isEquals(pi.type, PageItem.TYPE_TEXT)) {
                 TextView textView = new TextView(getContext());
+//                textView.setIncludeFontPadding(false);
                 textView.setLayoutParams(new LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
                 textView.setText(pi.text);
                 textView.setTextSize(defaultTextSize);
                 container.addView(textView);
                 textItems.add(textView);
+                allViews.add(textView);
                 // 设置textView 所在的文字列表顺序
                 textView.setTag(R.id.item_text, textItems.size() - 1);
+                textView.setTag(R.id.item_view, i);
                 // TODO: 18/9/30 需要重写textview 判断手势 否则点击事件会将父容器手势消费
 //                textView.setOnClickListener(this);
             } else if (StringUtil.isEquals(pi.type, PageItem.TYPE_TEXT)) {
@@ -142,9 +148,11 @@ public class PinchZoomPage extends NestedScrollView implements View.OnClickListe
                 container.addView(imageView);
                 Glide.with(getContext()).load(pi.imageUrl).into(imageView);
                 imageItems.add(imageView);
+                allViews.add(imageView);
                 imagesUrls.add(pi.imageUrl);
                 // 设置imageView 所在的图片列表顺序
                 imageView.setTag(R.id.item_image, imageItems.size() - 1);
+                imageView.setTag(R.id.item_view, i);
 //                imageView.setOnClickListener(this);
             }
         }
@@ -218,6 +226,10 @@ public class PinchZoomPage extends NestedScrollView implements View.OnClickListe
 
     public List<TextView> getTextViewItems() {
         return textItems;
+    }
+
+    public List<View> getAllViews() {
+        return allViews;
     }
 
     /**

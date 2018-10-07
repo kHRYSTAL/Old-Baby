@@ -211,9 +211,19 @@ public class FragArticleDetail extends FragBaseMvps implements IArticleDetailVie
         if (zoomPage.getTextViewItems() != null && !zoomPage.getTextViewItems().isEmpty()) {
             TextView textView = zoomPage.getTextViewItems().get(pos);
             textView.setTextColor(Color.RED);
-            // 获取当前读取控件相对屏幕的坐标
-            int top = textView.getTop();// 获取相对在它父亲里的坐标
-            zoomPage.smoothScrollTo(0, top);
+            int location = textView.getTop();
+//            int aboveDistance = 0;
+//            int curPosInPage = (int) textView.getTag(R.id.item_view);
+            // 获取改控件上方所有控件高度与间距总和
+//            if (zoomPage.getAllViews() != null && !zoomPage.getAllViews().isEmpty()) {
+//                for (int i = curPosInPage; i >= 0; i--) {
+//                    aboveDistance += zoomPage.getAllViews().get(i).getHeight();
+//                    // 目前没有间距 如果包含间距也需要计算
+//                }
+//                aboveDistance -= textView.getHeight();
+//            }
+            zoomPage.fling(0); // 在使用NestedScrollView时 不加此句会包含fling 导致定位错误
+            zoomPage.smoothScrollTo(0, location);
         }
     }
 
