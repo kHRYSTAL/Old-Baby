@@ -21,7 +21,7 @@ public class VideoListPresenter extends BasePullPresenter<Feed, VideoListModel, 
     private static final String TAG = VideoListPresenter.class.getSimpleName();
 
     @Override
-    protected void loadData(String nextId) {
+    protected void loadData(Integer nextId) {
         List<Feed> feeds = new ArrayList<>();
         for (int i = 0; i < 10; i++) {
             Feed feed = new Feed();
@@ -30,7 +30,7 @@ public class VideoListPresenter extends BasePullPresenter<Feed, VideoListModel, 
             feed.url = VideoConstant.videoUrls[0][i];
             feeds.add(feed);
         }
-        view().onLoadSucessfully(feeds);
+        view().onLoadSuccessfully(feeds);
     }
 
     public void onClickItem(Feed feed) {

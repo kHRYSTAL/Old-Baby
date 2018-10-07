@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 
 import com.oldbaby.R;
 import com.oldbaby.common.view.TabButton;
+import com.oldbaby.feed.view.impl.FragFeedTab;
 import com.oldbaby.oblib.mvp.presenter.BasePresenter;
 import com.oldbaby.oblib.mvp.view.tab.FragTabPageMvps;
 import com.oldbaby.oblib.util.MLog;
@@ -44,7 +45,7 @@ public class FragTabHome extends FragTabPageMvps implements ITabHomeView {
     public static final int TAB_ID_PROFILE = 3;
 
     // TODO: 18/9/27 需要替换类型
-    Fragment fragFeedList; // feed流
+    FragFeedTab fragFeedList; // feed流
     FragVideoList fragVideo; // 视频流
     Fragment fragProfile; // 个人中心
 
@@ -110,7 +111,7 @@ public class FragTabHome extends FragTabPageMvps implements ITabHomeView {
         MLog.d(TAG, "createTabPage : " + tabInfo.name);
         switch (tabInfo.tabId) {
             case TAB_ID_FEED: {
-                fragFeedList = new Fragment();
+                fragFeedList = new FragFeedTab();
                 return fragFeedList;
             }
             case TAB_ID_VIDEO: {

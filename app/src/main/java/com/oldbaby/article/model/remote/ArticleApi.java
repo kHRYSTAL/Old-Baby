@@ -1,7 +1,6 @@
 package com.oldbaby.article.model.remote;
 
-import com.oldbaby.common.bean.ArticleData;
-import com.oldbaby.oblib.retrofit.Result;
+import com.oldbaby.common.bean.Article;
 
 import retrofit.Call;
 import retrofit.http.GET;
@@ -19,5 +18,5 @@ public interface ArticleApi {
 
     @GET("/article/{articleId}/")
     @Headers({"apiVersion:1.0"})
-    Call<Result<ArticleData>> getArticleDetail(@Path("articleId") String articleId);
+    Call<Article> getArticleDetail(@Path("articleId") String articleId);
 }

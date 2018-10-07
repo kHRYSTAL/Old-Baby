@@ -26,4 +26,13 @@
         <item name="android:textSize">@dimen/app_title_text_size</item>
     </style>
 
+    <style name="INFO_RECOMMEND_MARK_TEXTVIEW">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:paddingLeft">6dp</item>
+        <item name="android:paddingRight">6dp</item>
+        <item name="android:layout_marginRight">8dp</item>
+        <item name="android:textSize">@dimen/txt_10</item>
+    </style>
+
 </resources>

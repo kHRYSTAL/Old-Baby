@@ -79,7 +79,7 @@ public abstract class BasePullPresenter<D extends LogicIdentifiable, M extends I
     /**
      * 页面上拉加载更多。上层最好不要调用，或者需要自己处理maxId，和currentMode
      */
-    public void loadMore(String nextId) {
+    public void loadMore(Integer nextId) {
         loadData(nextId);
     }
 
@@ -128,5 +128,5 @@ public abstract class BasePullPresenter<D extends LogicIdentifiable, M extends I
      *
      * @param nextId 为null时代表下拉刷新，不为null时为上拉加载更多
      */
-    protected abstract void loadData(String nextId);
+    protected abstract void loadData(Integer nextId);
 }

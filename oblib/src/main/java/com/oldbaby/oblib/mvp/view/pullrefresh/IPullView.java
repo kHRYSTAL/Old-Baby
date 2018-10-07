@@ -32,12 +32,12 @@ public interface IPullView<D extends LogicIdentifiable> extends IMvpView {
     /**
      * 加载数据成功
      */
-    void onLoadSucessfully(List<D> items);
+    void onLoadSuccessfully(List<D> items);
 
     /**
      * 加载数据成功
      */
-    void onLoadSucessfully(PageData<D> dataList);
+    void onLoadSuccessfully(PageData<D> dataList);
 
     /**
      * 加载数据失败

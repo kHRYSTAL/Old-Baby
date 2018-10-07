@@ -11,11 +11,10 @@ import com.iflytek.cloud.SpeechSynthesizer;
 import com.iflytek.cloud.SynthesizerListener;
 import com.oldbaby.article.model.IArticleDetailModel;
 import com.oldbaby.article.view.IArticleDetailView;
-import com.oldbaby.common.bean.ArticleData;
+import com.oldbaby.common.bean.Article;
 import com.oldbaby.common.util.IFlySpeechConfigUtil;
 import com.oldbaby.oblib.component.lifeprovider.PresenterEvent;
 import com.oldbaby.oblib.mvp.presenter.BasePresenter;
-import com.oldbaby.oblib.retrofit.Result;
 import com.oldbaby.oblib.util.MLog;
 import com.oldbaby.oblib.util.StringUtil;
 import com.oldbaby.oblib.util.gson.GsonHelper;
@@ -112,8 +111,8 @@ public class ArticleDetailPresenter extends BasePresenter<IArticleDetailModel, I
         model().getArticleDetail(articleId)
                 .subscribeOn(getSchedulerSubscribe())
                 .observeOn(getSchedulerObserver())
-                .compose(this.<Result<ArticleData>>bindUntilEvent(PresenterEvent.UNBIND_VIEW))
-                .subscribe(new Subscriber<Result<ArticleData>>() {
+                .compose(this.<Article>bindUntilEvent(PresenterEvent.UNBIND_VIEW))
+                .subscribe(new Subscriber<Article>() {
                     @Override
                     public void onCompleted() {
 
@@ -134,7 +133,7 @@ public class ArticleDetailPresenter extends BasePresenter<IArticleDetailModel, I
                     }
 
                     @Override
-                    public void onNext(Result<ArticleData> result) {
+                    public void onNext(Article article) {
                         isPause = false;
                         isStart = false;
                         view().hideProgressDlg();
@@ -142,14 +141,14 @@ public class ArticleDetailPresenter extends BasePresenter<IArticleDetailModel, I
                         paragraphs = null;
                         currentParagraphIndex = 0;
                         MLog.e(TAG, "文章详情获取成功");
-                        MLog.json(TAG, GsonHelper.GetCommonGson().toJson(result));
-                        if (result.data == null || result.data.getArticle() == null || result.data.getArticle().isEmpty()) {
+                        MLog.json(TAG, GsonHelper.GetCommonGson().toJson(article));
+                        if (article.getArticle() == null || article.getArticle().isEmpty()) {
                             view().showArticleEmptyView();
                             view().hidePlayButtonText();
                         } else {
                             view().hideArticleEmptyView();
                             view().setPlayButtonText("开始");
-                            view().setDataToView(result.data.getArticle());
+                            view().setDataToView(article.getArticle());
                         }
                     }
                 });
@@ -173,17 +172,18 @@ public class ArticleDetailPresenter extends BasePresenter<IArticleDetailModel, I
 
         @Override
         public void onSpeakBegin() {
-            view().showToast("开始播放");
+            MLog.e(TAG, "开始播放:" + (currentParagraphIndex - 1));
+            view().startSpeak(currentParagraphIndex - 1);
         }
 
         @Override
         public void onSpeakPaused() {
-            view().showToast("暂停播放");
+            MLog.e(TAG, "暂停播放:" + currentParagraphIndex);
         }
 
         @Override
         public void onSpeakResumed() {
-            view().showToast("继续播放");
+            MLog.e(TAG, "继续播放:" + currentParagraphIndex);
         }
 
         @Override
@@ -202,8 +202,9 @@ public class ArticleDetailPresenter extends BasePresenter<IArticleDetailModel, I
         public void onCompleted(SpeechError error) {
             if (error == null) {
                 MLog.e(TAG, "第 " + currentParagraphIndex + "段播放完成");
+                view().endSpeak(currentParagraphIndex - 1);
                 handleSpeak();
-            } else if (error != null) {
+            } else {
                 view().showToast(error.getPlainDescription(true));
             }
         }

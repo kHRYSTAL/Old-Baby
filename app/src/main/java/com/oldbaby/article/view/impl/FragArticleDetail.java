@@ -1,7 +1,8 @@
-package com.oldbaby.article.view;
+package com.oldbaby.article.view.impl;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -11,14 +12,16 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.oldbaby.R;
-import com.oldbaby.article.model.ArticleDetailModel;
+import com.oldbaby.article.model.impl.ArticleDetailModel;
 import com.oldbaby.article.presenter.ArticleDetailPresenter;
+import com.oldbaby.article.view.IArticleDetailView;
 import com.oldbaby.common.base.CommonFragActivity;
 import com.oldbaby.common.base.TitleBarProxy;
 import com.oldbaby.common.bean.PageItem;
 import com.oldbaby.common.view.zoompage.PinchZoomPage;
 import com.oldbaby.oblib.mvp.presenter.BasePresenter;
 import com.oldbaby.oblib.mvp.view.FragBaseMvps;
+import com.oldbaby.oblib.util.MLog;
 import com.oldbaby.oblib.view.EmptyView;
 import com.oldbaby.oblib.view.NetErrorView;
 
@@ -200,6 +203,25 @@ public class FragArticleDetail extends FragBaseMvps implements IArticleDetailVie
     public void hidePlayButtonText() {
         if (tbPlay != null) {
             tbPlay.setVisibility(View.GONE);
+        }
+    }
+
+    @Override
+    public void startSpeak(int pos) {
+        if (zoomPage.getTextViewItems() != null && !zoomPage.getTextViewItems().isEmpty()) {
+            TextView textView = zoomPage.getTextViewItems().get(pos);
+            textView.setTextColor(Color.RED);
+            // 获取当前读取控件相对屏幕的坐标
+            int top = textView.getTop();// 获取相对在它父亲里的坐标
+            zoomPage.smoothScrollTo(0, top);
+        }
+    }
+
+    @Override
+    public void endSpeak(int pos) {
+        if (zoomPage.getTextViewItems() != null && !zoomPage.getTextViewItems().isEmpty()) {
+            TextView textView = zoomPage.getTextViewItems().get(pos);
+            textView.setTextColor(Color.GRAY);
         }
     }
 }

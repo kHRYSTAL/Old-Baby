@@ -44,7 +44,7 @@
             android:value="2.1" />
 
         <activity
-            android:name=".test.MainActivity"
+            android:name=".tabhome.view.impl.TabHome"
             android:configChanges="keyboardHidden|orientation|screenSize"
             android:launchMode="singleTop"
             android:screenOrientation="portrait"

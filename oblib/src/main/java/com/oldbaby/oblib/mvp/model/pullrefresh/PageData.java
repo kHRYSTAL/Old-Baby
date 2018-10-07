@@ -13,21 +13,26 @@ import java.util.List;
  * email: 723526676@qq.com
  */
 public class PageData<T> implements Serializable {
+
     private static final long serialVersionUID = -5607262592780784855L;
 
 //    // 是否最后一页
 //    @SerializedName("lastPage")
 //    public boolean pageIsLast = true;
 
-    // 上拉传递给server的页数
+    // 上拉传递给server的下一页页数
     @SerializedName("next")
-    public String next;
+    public Integer next;
+
+    // 上一页页数
+    @SerializedName("previous")
+    public String previous;
 
     // 总数
     @SerializedName("count")
     public long count;
 
     // 列表数据
-    @SerializedName("result")
+    @SerializedName("results")
     public List<T> data;
 }

@@ -9,6 +9,7 @@ import com.google.gson.annotations.SerializedName;
  * update time:
  * email: 723526676@qq.com
  */
+@Deprecated
 public class Result<T> {
 
     @SerializedName("code")

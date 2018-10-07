@@ -2,6 +2,7 @@ package com.oldbaby.common.view.zoompage;
 
 import android.content.Context;
 import android.graphics.Paint;
+import android.support.v4.widget.NestedScrollView;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.View;
@@ -21,13 +22,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * usage: 支持容器内所有文字控件放大的scrollView 未来文章详情页支持评论后 需要把父类改为linearlayout 然后作为recyclerview的header
+ * usage: 支持容器内所有文字控件放大的 NestedScrollView 未来文章详情页支持评论后 需要把父类改为linearlayout
+ *  然后作为recyclerview的header
  * author: kHRYSTAL
  * create time: 18/9/28
  * update time:
  * email: 723526676@qq.com
  */
-public class PinchZoomPage extends ScrollView implements View.OnClickListener {
+public class PinchZoomPage extends NestedScrollView implements View.OnClickListener {
 
     //Consider each "step" between the two pointers as 200 px. In other words, the TV size will grow every 200 pixels.
     private static final float STEP = 200;
@@ -212,6 +214,10 @@ public class PinchZoomPage extends ScrollView implements View.OnClickListener {
             }
         }
         return texts;
+    }
+
+    public List<TextView> getTextViewItems() {
+        return textItems;
     }
 
     /**

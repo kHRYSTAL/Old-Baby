@@ -33,7 +33,9 @@ import rx.functions.Action1;
  * email: 723526676@qq.com
  */
 public abstract class FragBasePullMvps<V extends View, D extends LogicIdentifiable, P extends BasePullPresenter>
-        extends FragBaseMvps implements IPullView<D>, PullToRefreshBase.OnRefreshListener2<V>  {
+        extends FragBaseMvps implements IPullView<D>, PullToRefreshBase.OnRefreshListener2<V> {
+
+    private static final String TAG = FragPullRecyclerView.class.getSimpleName();
 
     private static final String KEY_PULL_PRESENTER = "PULL_PRESENTER";  //PullPresenter 的key
 
@@ -41,7 +43,7 @@ public abstract class FragBasePullMvps<V extends View, D extends LogicIdentifiab
     protected V internalView;
     protected PullEvent currentEvent = PullEvent.none;  //当前下拉刷新的状态
     protected P basePullPresenter;
-    protected String next;                                //对应next页面
+    protected Integer next;                                //对应next页面
     protected boolean isLastPage = true;                 //是否为最后一页，如果是，不可上拉加载更多
 
     private Subscription showLoadMoreDelayOb;      //load more 完成后，延迟300毫秒 scroll，使得新加载出来的数据得以显示。
@@ -101,7 +103,7 @@ public abstract class FragBasePullMvps<V extends View, D extends LogicIdentifiab
 
     @Override
     public void onPullUpToRefresh(PullToRefreshBase<V> refreshView) {
-        if (this.isRefreshing() == false) {
+        if (!this.isRefreshing()) {
             this.currentEvent = PullEvent.more;
             basePullPresenter.loadMore(next);
         }
@@ -158,7 +160,7 @@ public abstract class FragBasePullMvps<V extends View, D extends LogicIdentifiab
     }
 
     @Override
-    public final void onLoadSucessfully(List<D> items) {
+    public final void onLoadSuccessfully(List<D> items) {
         switch (currentEvent) {
             case normal:
                 cleanData();
@@ -176,16 +178,19 @@ public abstract class FragBasePullMvps<V extends View, D extends LogicIdentifiab
     }
 
     @Override
-    public final void onLoadSucessfully(PageData<D> dataList) {
+    public final void onLoadSuccessfully(PageData<D> dataList) {
         if (dataList == null) {
             isLastPage = false;
         } else {
             this.next = dataList.next;
-            if (dataList.data == null || dataList.data.isEmpty())
+            // TODO: 18/10/7 需要询问server 是否这些条件认为是最后一页
+            if (dataList.data == null || dataList.data.isEmpty() || next == null)
                 isLastPage = true;
+            else
+                isLastPage = false;
         }
         setPullModeWithPullAbility();
-        onLoadSucessfully(dataList == null ? null : dataList.data);
+        onLoadSuccessfully(dataList == null ? null : dataList.data);
     }
 
     @Override

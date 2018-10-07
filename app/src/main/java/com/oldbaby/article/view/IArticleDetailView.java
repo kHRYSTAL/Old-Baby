@@ -33,4 +33,8 @@ public interface IArticleDetailView extends IMvpView {
     void setPlayButtonText(String text);
 
     void hidePlayButtonText();
+
+    void startSpeak(int pos);
+
+    void endSpeak(int pos);
 }

@@ -1,9 +1,8 @@
 package com.oldbaby.article.model;
 
 
-import com.oldbaby.common.bean.ArticleData;
+import com.oldbaby.common.bean.Article;
 import com.oldbaby.oblib.mvp.model.IMvpModel;
-import com.oldbaby.oblib.retrofit.Result;
 
 import rx.Observable;
 
@@ -17,5 +16,5 @@ import rx.Observable;
 public interface IArticleDetailModel extends IMvpModel {
 
     // 获取文章详情
-    Observable<Result<ArticleData>> getArticleDetail(String articleId);
+    Observable<Article> getArticleDetail(String articleId);
 }

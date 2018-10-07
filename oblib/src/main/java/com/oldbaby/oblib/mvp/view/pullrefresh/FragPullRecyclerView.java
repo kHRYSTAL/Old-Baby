@@ -15,6 +15,7 @@ import com.handmark.pulltorefresh.library.PullToRefreshBase;
 import com.oldbaby.oblib.R;
 import com.oldbaby.oblib.mvp.presenter.pullrefresh.BasePullPresenter;
 import com.oldbaby.oblib.util.DensityUtil;
+import com.oldbaby.oblib.util.MLog;
 import com.oldbaby.oblib.util.StringUtil;
 import com.oldbaby.oblib.view.EmptyView;
 import com.oldbaby.oblib.view.NetErrorView;
@@ -90,10 +91,12 @@ public abstract class FragPullRecyclerView<D extends LogicIdentifiable, P extend
         public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
             super.onScrolled(recyclerView, dx, dy);
             // 如果滚动的位置已经超过倒数第二条，并且不是最后一页，以及没有正在刷新，则自动加载后面更多
-            if (isLastPage || scrollState == 0)
+            if (isLastPage || scrollState == 0) {
                 return;
-            if (isRefreshing())
+            }
+            if (isRefreshing()) {
                 return;
+            }
             View lastVisibleChild = internalView.getChildAt(internalView.getChildCount() - 1);
             int lastVisiblePosition = lastVisibleChild != null ? internalView.getChildAdapterPosition(lastVisibleChild) : -1;
             if (lastVisiblePosition >= internalView.getAdapter().getItemCount() - 3) {
