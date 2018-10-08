@@ -220,9 +220,11 @@ public class FragArticleDetail extends FragBaseMvps implements IArticleDetailVie
 //                    aboveDistance += zoomPage.getAllViews().get(i).getHeight();
 //                    // 目前没有间距 如果包含间距也需要计算
 //                }
-//                aboveDistance -= textView.getHeight();
+//                aboveDistance -= view.getHeight();
 //            }
-            zoomPage.fling(0); // 在使用NestedScrollView时 不加此句会包含fling 导致定位错误
+
+            // when extend NestedScrollView need add this method, else smoothScrollTo will has default fling distance
+            zoomPage.fling(0); 
             zoomPage.smoothScrollTo(0, location);
         }
     }
