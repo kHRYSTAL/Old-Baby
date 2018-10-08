@@ -7,6 +7,7 @@ import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewParent;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -33,19 +34,14 @@ import java.util.List;
  */
 public class PinchZoomPage extends NestedScrollView implements View.OnClickListener {
 
-    //Consider each "step" between the two pointers as 200 px. In other words, the TV size will grow every 200 pixels.
     private static final float STEP = 200;
 
-    // The ratio of the text size compared to its original.
     private float ratio = 1.0f;
 
-    // The distance between the two pointers when they are first placed on the screen.
     private int baseDistance;
 
-    // The ratio of the text size when the gesture is started.
     private float baseRatio;
 
-    // Boolean flag for whether or not zoom feature is enabled. Defaults to true.
     private boolean zoomEnabled = true;
 
     private String referer;
@@ -59,6 +55,8 @@ public class PinchZoomPage extends NestedScrollView implements View.OnClickListe
     private List<String> imagesUrls;
 
     private OnPageItemClickListener onPageItemClickListener;
+
+    private int mDownY, mMoveY;
 
     public PinchZoomPage(Context context) {
         super(context);
@@ -91,6 +89,50 @@ public class PinchZoomPage extends NestedScrollView implements View.OnClickListe
     }
 
     @Override
+    public boolean onInterceptTouchEvent(MotionEvent ev) {
+        // 当单指手势滑动时 或双指手势放大缩小时 需要return true 其它情况都交给子view去处理点击事件
+        switch (ev.getAction()) {
+            case MotionEvent.ACTION_DOWN:
+                if (zoomEnabled && ev.getPointerCount() == 2) {
+                } else {
+                    mDownY = (int) ev.getRawY();
+                }
+                break;
+            case MotionEvent.ACTION_CANCEL:
+            case MotionEvent.ACTION_UP:
+                mDownY = 0;
+                mMoveY = 0;
+                break;
+            case MotionEvent.ACTION_MOVE:
+                if (zoomEnabled && ev.getPointerCount() == 2) {
+
+                } else {
+                    mMoveY = (int) ev.getRawY();
+                    //如果是非点击事件就拦截 让父布局接手onTouch 否则执行子ViewOnClick
+                    if (Math.abs(mDownY - mMoveY) > 0) {
+                        final ViewParent parent = getParent();
+                        if (parent != null) {
+                            parent.requestDisallowInterceptTouchEvent(true);
+                        }
+                        return super.onInterceptTouchEvent(ev);
+                    }
+                }
+                break;
+        }
+        if (zoomEnabled && ev.getPointerCount() == 2) {
+            int action = ev.getAction();
+            int pureAction = action & MotionEvent.ACTION_MASK;
+            int distance = getDistance(ev);
+            if (pureAction == MotionEvent.ACTION_POINTER_DOWN) {
+                baseDistance = distance;
+                baseRatio = ratio;
+            }
+            return true;
+        }
+        return super.onInterceptTouchEvent(ev);
+    }
+
+    @Override
     public boolean onTouchEvent(MotionEvent ev) {
         switch (ev.getAction()) {
             case MotionEvent.ACTION_DOWN:
@@ -103,18 +145,11 @@ public class PinchZoomPage extends NestedScrollView implements View.OnClickListe
         }
         // Must have two gestures.
         if (zoomEnabled && ev.getPointerCount() == 2) {
-            int action = ev.getAction();
             int distance = getDistance(ev);
-            int pureAction = action & MotionEvent.ACTION_MASK;
-            if (pureAction == MotionEvent.ACTION_POINTER_DOWN) {
-                baseDistance = distance;
-                baseRatio = ratio;
-            } else {
-                float delta = (distance - baseDistance) / STEP;
-                float multi = (float) Math.pow(2, delta);
-                ratio = Math.min(1024.0f, Math.max(0.1f, baseRatio * multi));
-                setTextSize(ratio + 13);
-            }
+            float delta = (distance - baseDistance) / STEP;
+            float multi = (float) Math.pow(2, delta);
+            ratio = Math.min(1024.0f, Math.max(0.1f, baseRatio * multi));
+            setTextSize(ratio + 13);
             return true;
         }
         return super.onTouchEvent(ev);
@@ -145,7 +180,7 @@ public class PinchZoomPage extends NestedScrollView implements View.OnClickListe
                 textView.setTag(R.id.item_text, textItems.size() - 1);
                 textView.setTag(R.id.item_view, i);
                 // TODO: 18/9/30 需要重写textview 判断手势 否则点击事件会将父容器手势消费
-//                textView.setOnClickListener(this);
+                textView.setOnClickListener(this);
             } else if (pi.type == PageItem.TYPE_IMAGE) {
                 ImageView imageView = new ImageView(getContext());
                 imageView.setLayoutParams(new LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
@@ -162,7 +197,7 @@ public class PinchZoomPage extends NestedScrollView implements View.OnClickListe
                 // 设置imageView 所在的图片列表顺序
                 imageView.setTag(R.id.item_image, imageItems.size() - 1);
                 imageView.setTag(R.id.item_view, i);
-//                imageView.setOnClickListener(this);
+                imageView.setOnClickListener(this);
             }
         }
     }
@@ -268,11 +303,11 @@ public class PinchZoomPage extends NestedScrollView implements View.OnClickListe
     @Override
     public void onClick(View view) {
         if (onPageItemClickListener != null) {
-            if (view instanceof TextView)
+            if (view instanceof TextView) {
                 onPageItemClickListener.onTextClick((TextView) view, (Integer) view.getTag(R.id.item_text));
-            else if (view instanceof ImageView)
+            } else if (view instanceof ImageView) {
                 onPageItemClickListener.onImageClick((ImageView) view, (Integer) view.getTag(R.id.item_image), imagesUrls);
-            else
+            } else
                 onPageItemClickListener.onViewClick(view);
         }
     }

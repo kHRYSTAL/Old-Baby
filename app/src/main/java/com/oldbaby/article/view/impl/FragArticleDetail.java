@@ -9,6 +9,7 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.oldbaby.R;
@@ -136,6 +137,22 @@ public class FragArticleDetail extends FragBaseMvps implements IArticleDetailVie
         emptyView.setPrompt("暂无内容");
         errorView.setVisibility(View.GONE);
         emptyView.setVisibility(View.GONE);
+        zoomPage.setOnPageItemClickListener(new PinchZoomPage.OnPageItemClickListener() {
+            @Override
+            public void onTextClick(TextView textView, int textPosition) {
+
+            }
+
+            @Override
+            public void onImageClick(ImageView imageView, int imagePosition, List<String> allImageUrls) {
+
+            }
+
+            @Override
+            public void onViewClick(View view) {
+
+            }
+        });
     }
 
     @Override
