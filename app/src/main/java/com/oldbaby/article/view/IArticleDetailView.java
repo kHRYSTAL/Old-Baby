@@ -37,4 +37,6 @@ public interface IArticleDetailView extends IMvpView {
     void startSpeak(int pos);
 
     void endSpeak(int pos);
+
+    void setReferer(String referer);
 }

@@ -9,8 +9,11 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.model.GlideUrl;
+import com.bumptech.glide.load.model.Headers;
 import com.oldbaby.R;
 import com.oldbaby.common.bean.Feed;
+import com.oldbaby.common.util.SpiderHeader;
 import com.oldbaby.oblib.mvp.view.pullrefresh.FragPullRecyclerView;
 import com.oldbaby.oblib.mvp.view.pullrefresh.PullRecyclerViewAdapter;
 import com.oldbaby.oblib.mvp.view.pullrefresh.RecyclerViewHolder;

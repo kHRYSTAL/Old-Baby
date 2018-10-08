@@ -37,7 +37,7 @@ public class Article extends OrmDto implements LogicIdentifiable {
     public Integer insertMethod;
 
     @SerializedName("duration")
-    public Long duration;
+    public String duration;
 
     @SerializedName("source")
     public String source;
@@ -47,6 +47,9 @@ public class Article extends OrmDto implements LogicIdentifiable {
 
     @SerializedName("hot")
     public boolean hot;
+
+    @SerializedName("spider_url")
+    public String spiderUrl;
 
     @SerializedName("comment_nums")
     public int commentNums;

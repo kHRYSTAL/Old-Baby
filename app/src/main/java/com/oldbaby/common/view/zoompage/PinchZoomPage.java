@@ -9,13 +9,15 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.ScrollView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.model.GlideUrl;
+import com.bumptech.glide.load.model.Headers;
 import com.oldbaby.R;
 import com.oldbaby.common.app.PrefUtil;
 import com.oldbaby.common.bean.PageItem;
+import com.oldbaby.common.util.SpiderHeader;
 import com.oldbaby.oblib.util.StringUtil;
 
 import java.util.ArrayList;
@@ -23,7 +25,7 @@ import java.util.List;
 
 /**
  * usage: 支持容器内所有文字控件放大的 NestedScrollView 未来文章详情页支持评论后 需要把父类改为linearlayout
- *  然后作为recyclerview的header
+ * 然后作为recyclerview的header
  * author: kHRYSTAL
  * create time: 18/9/28
  * update time:
@@ -45,6 +47,8 @@ public class PinchZoomPage extends NestedScrollView implements View.OnClickListe
 
     // Boolean flag for whether or not zoom feature is enabled. Defaults to true.
     private boolean zoomEnabled = true;
+
+    private String referer;
 
 
     // real container
@@ -128,7 +132,7 @@ public class PinchZoomPage extends NestedScrollView implements View.OnClickListe
         float defaultTextSize = PrefUtil.Instance().getZoomPageTextSize(getContext());
         for (int i = 0; i < pageItems.size(); i++) {
             PageItem pi = pageItems.get(i);
-            if (StringUtil.isEquals(pi.type, PageItem.TYPE_TEXT)) {
+            if (pi.type == PageItem.TYPE_TEXT) {
                 TextView textView = new TextView(getContext());
 //                textView.setIncludeFontPadding(false);
                 textView.setLayoutParams(new LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
@@ -142,11 +146,16 @@ public class PinchZoomPage extends NestedScrollView implements View.OnClickListe
                 textView.setTag(R.id.item_view, i);
                 // TODO: 18/9/30 需要重写textview 判断手势 否则点击事件会将父容器手势消费
 //                textView.setOnClickListener(this);
-            } else if (StringUtil.isEquals(pi.type, PageItem.TYPE_TEXT)) {
+            } else if (pi.type == PageItem.TYPE_IMAGE) {
                 ImageView imageView = new ImageView(getContext());
                 imageView.setLayoutParams(new LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
                 container.addView(imageView);
-                Glide.with(getContext()).load(pi.imageUrl).into(imageView);
+                if (StringUtil.isNullOrEmpty(this.referer))
+                    Glide.with(getContext()).load(pi.imageUrl).into(imageView);
+                else {
+                    Headers headers = SpiderHeader.getInstance().addRefer(this.referer).build();
+                    Glide.with(getContext()).load(new GlideUrl(pi.imageUrl, headers)).into(imageView);
+                }
                 imageItems.add(imageView);
                 allViews.add(imageView);
                 imagesUrls.add(pi.imageUrl);
@@ -230,6 +239,10 @@ public class PinchZoomPage extends NestedScrollView implements View.OnClickListe
 
     public List<View> getAllViews() {
         return allViews;
+    }
+
+    public void setImageReferer(String referer) {
+        this.referer = referer;
     }
 
     /**

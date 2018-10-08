@@ -236,4 +236,9 @@ public class FragArticleDetail extends FragBaseMvps implements IArticleDetailVie
             textView.setTextColor(Color.GRAY);
         }
     }
+
+    @Override
+    public void setReferer(String referer) {
+        zoomPage.setImageReferer(referer);
+    }
 }

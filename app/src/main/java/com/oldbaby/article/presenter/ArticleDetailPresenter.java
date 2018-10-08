@@ -148,6 +148,7 @@ public class ArticleDetailPresenter extends BasePresenter<IArticleDetailModel, I
                         } else {
                             view().hideArticleEmptyView();
                             view().setPlayButtonText("开始");
+                            view().setReferer(article.spiderUrl);
                             view().setDataToView(article.getArticle());
                         }
                     }

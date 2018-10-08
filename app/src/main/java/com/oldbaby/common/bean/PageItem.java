@@ -11,10 +11,10 @@ import com.oldbaby.oblib.OrmDto;
  */
 public class PageItem extends OrmDto {
 
-    public static final String TYPE_TEXT = "text";
-    public static final String TYPE_IMAGE = "image";
+    public static final int TYPE_TEXT = 1;
+    public static final int TYPE_IMAGE = 2;
     
-    public String type;
+    public int type;
     public String text;
     public String imageUrl;
 }

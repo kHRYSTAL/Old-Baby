@@ -10,12 +10,12 @@ import com.bumptech.glide.load.model.LazyHeaders;
  * email: 723526676@qq.com
  */
 public class SpiderHeader {
+
     private static SpiderHeader instance = null;
-    private final LazyHeaders headers;
+    private final LazyHeaders.Builder builder;
 
     private SpiderHeader() {
-        headers = new LazyHeaders.Builder().addHeader("User-Agent",
-                "Mozilla/5.0 (android) GoogleWebKit/537.36 (KHTML, like Gecko) Chrome/54.0.2840.87 Safari/537.36").build();
+        builder = new LazyHeaders.Builder();
     }
 
     public static SpiderHeader getInstance() {
@@ -29,7 +29,27 @@ public class SpiderHeader {
         return instance;
     }
 
-    public LazyHeaders getHeaders() {
-        return headers;
+    public SpiderHeader addHeader(String key, String value) {
+        builder.addHeader(key, value);
+        return instance;
+    }
+
+    public SpiderHeader addRefer(String value) {
+        builder.addHeader("referer", value);
+        return instance;
+    }
+
+    public SpiderHeader addUserAgent() {
+        builder.addHeader("user-agent", "Mozilla/5.0 (android) GoogleWebKit/537.36 (KHTML, like Gecko) Chrome/54.0.2840.87 Safari/537.36");
+        return instance;
+    }
+
+    public SpiderHeader addInsecureRequests() {
+        builder.addHeader("upgrade-insecure-requests", String.valueOf(1));
+        return instance;
+    }
+
+    public LazyHeaders build() {
+        return builder.build();
     }
 }

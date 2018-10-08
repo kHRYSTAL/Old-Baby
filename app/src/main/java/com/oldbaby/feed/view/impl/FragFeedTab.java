@@ -11,9 +11,12 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.model.GlideUrl;
+import com.bumptech.glide.load.model.Headers;
 import com.oldbaby.R;
 import com.oldbaby.article.view.impl.FragArticleDetail;
 import com.oldbaby.common.bean.Article;
+import com.oldbaby.common.util.SpiderHeader;
 import com.oldbaby.feed.model.impl.FeedTabModel;
 import com.oldbaby.feed.presenter.FeedTabPresenter;
 import com.oldbaby.feed.view.IFeedTabView;
@@ -117,8 +120,12 @@ public class FragFeedTab extends FragPullRecyclerView<Article, FeedTabPresenter>
         public void fill(Article article) {
             this.article = article;
             if (article != null) {
-                if (!StringUtil.isNullOrEmpty(article.thumbPicUrl))
-//                    Glide.with(getContext()).load(article.thumbPicUrl).into(ivInfoImg);
+                if (!StringUtil.isNullOrEmpty(article.thumbPicUrl) && getActivity() != null) {
+                    Headers headers = SpiderHeader.getInstance()
+                            .addRefer(article.spiderUrl)
+                            .build();
+                    Glide.with(getActivity()).load(new GlideUrl(article.thumbPicUrl, headers)).into(ivInfoImg);
+                }
                 if (!StringUtil.isNullOrEmpty(article.title))
                     tvInfoTitle.setText(article.title);
                 if (!StringUtil.isNullOrEmpty(article.source))
