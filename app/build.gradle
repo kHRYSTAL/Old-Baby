@@ -11,6 +11,27 @@ android {
 
         javaCompileOptions { annotationProcessorOptions { includeCompileClasspath = true } }
     }
+
+    dexOptions {
+        javaMaxHeapSize "4g"
+    }
+
+    signingConfigs {
+        release {
+            storeFile file("oldbaby.keystore")
+            storePassword "999ganmaoling"
+            keyAlias "oldbaby"
+            keyPassword "999ganmaoling"
+        }
+
+        debug {
+            storeFile file("oldbaby.keystore")
+            storePassword "999ganmaoling"
+            keyAlias "oldbaby"
+            keyPassword "999ganmaoling"
+        }
+    }
+
     buildTypes {
         release {
             minifyEnabled false
@@ -29,6 +50,7 @@ dependencies {
     implementation project(':oblib')
     implementation rootProject.mmkv
     implementation rootProject.jiaozi
+    implementation rootProject.permission
     implementation rootProject.butterknife
     annotationProcessor rootProject.butterknifecompile
     annotationProcessor rootProject.glidecompile
