@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="@android:color/black"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:gravity="center_horizontal|center_vertical">
+
+        <com.oldbaby.oblib.view.ImageViewEx
+            android:id="@+id/galleryimage"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent" />
+
+        <com.oldbaby.oblib.view.ImageViewEx
+            android:id="@+id/gallerysimage"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent" />
+    </RelativeLayout>
+
+    <ProgressBar
+        android:id="@+id/galleryprogress"
+        style="@style/info_progress"
+        android:layout_width="35dp"
+        android:layout_height="35dp"
+        android:layout_centerInParent="true" />
+
+    <ScrollView
+        android:id="@+id/svImgViewerDesc"
+        android:layout_width="match_parent"
+        android:layout_height="110dp"
+        android:layout_alignParentBottom="true"
+        android:background="#44444444">
+
+        <TextView
+            android:id="@+id/tvImgViewerDesc"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="10dp" />
+    </ScrollView>
+
+
+</RelativeLayout>

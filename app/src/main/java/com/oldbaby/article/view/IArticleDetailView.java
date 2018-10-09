@@ -5,6 +5,7 @@ import android.content.Context;
 import com.oldbaby.common.bean.PageItem;
 import com.oldbaby.oblib.mvp.view.IMvpView;
 
+import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -39,4 +40,7 @@ public interface IArticleDetailView extends IMvpView {
     void endSpeak(int pos);
 
     void setReferer(String referer);
+
+    void watchImage(int imagePosition, HashMap<String, String> header);
+
 }

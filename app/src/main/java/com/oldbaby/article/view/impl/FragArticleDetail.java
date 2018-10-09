@@ -16,10 +16,13 @@ import com.oldbaby.R;
 import com.oldbaby.article.model.impl.ArticleDetailModel;
 import com.oldbaby.article.presenter.ArticleDetailPresenter;
 import com.oldbaby.article.view.IArticleDetailView;
+import com.oldbaby.common.adapter.ArticleImageAdapter;
 import com.oldbaby.common.base.CommonFragActivity;
 import com.oldbaby.common.base.TitleBarProxy;
 import com.oldbaby.common.bean.PageItem;
 import com.oldbaby.common.view.zoompage.PinchZoomPage;
+import com.oldbaby.oblib.image.viewer.FreeImageViewer;
+import com.oldbaby.oblib.image.viewer.ImageDataAdapter;
 import com.oldbaby.oblib.mvp.presenter.BasePresenter;
 import com.oldbaby.oblib.mvp.view.FragBaseMvps;
 import com.oldbaby.oblib.util.MLog;
@@ -145,7 +148,7 @@ public class FragArticleDetail extends FragBaseMvps implements IArticleDetailVie
 
             @Override
             public void onImageClick(ImageView imageView, int imagePosition, List<String> allImageUrls) {
-
+                presenter.onImageClick(imagePosition);
             }
 
             @Override
@@ -257,5 +260,14 @@ public class FragArticleDetail extends FragBaseMvps implements IArticleDetailVie
     @Override
     public void setReferer(String referer) {
         zoomPage.setImageReferer(referer);
+    }
+
+    @Override
+    public void watchImage(int imagePosition, HashMap<String, String> header) {
+        ArticleImageAdapter articleImageAdapter = new ArticleImageAdapter(zoomPage.getImageUrlsFromItems());
+        FreeImageViewer.invoke(getActivity(), articleImageAdapter,
+                imagePosition, articleImageAdapter.count(),
+                -1, 0,
+                FreeImageViewer.TYPE_SHOW_NUMBER, header);
     }
 }

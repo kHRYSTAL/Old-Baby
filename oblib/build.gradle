@@ -26,6 +26,7 @@ dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     api project(':pulllib')
     api rootProject.supportV7
+    api rootProject.glide
     api rootProject.recyclerView
     api rootProject.multiDex
     api rootProject.rxjava

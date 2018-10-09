@@ -3,6 +3,7 @@ package com.oldbaby.article.presenter;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 
+import com.bumptech.glide.load.model.LazyHeaders;
 import com.iflytek.cloud.ErrorCode;
 import com.iflytek.cloud.InitListener;
 import com.iflytek.cloud.SpeechError;
@@ -19,6 +20,7 @@ import com.oldbaby.oblib.util.MLog;
 import com.oldbaby.oblib.util.StringUtil;
 import com.oldbaby.oblib.util.gson.GsonHelper;
 
+import java.util.HashMap;
 import java.util.List;
 
 import rx.Subscriber;
@@ -42,6 +44,7 @@ public class ArticleDetailPresenter extends BasePresenter<IArticleDetailModel, I
     private boolean isPause = false;
 
     private String articleId;
+    private String referer;
     private List<String> paragraphs;
     private int currentParagraphIndex;
 
@@ -149,6 +152,7 @@ public class ArticleDetailPresenter extends BasePresenter<IArticleDetailModel, I
                             view().hideArticleEmptyView();
                             view().setPlayButtonText("开始");
                             view().setReferer(article.spiderUrl);
+                            referer = article.spiderUrl;
                             view().setDataToView(article.getArticle());
                         }
                     }
@@ -235,4 +239,10 @@ public class ArticleDetailPresenter extends BasePresenter<IArticleDetailModel, I
             }
         }
     };
+
+    public void onImageClick(int imagePosition) {
+        HashMap<String, String> header = new HashMap<>();
+        header.put("referer", referer);
+        view().watchImage(imagePosition, header);
+    }
 }

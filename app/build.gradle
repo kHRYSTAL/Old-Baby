@@ -31,6 +31,5 @@ dependencies {
     implementation rootProject.jiaozi
     implementation rootProject.butterknife
     annotationProcessor rootProject.butterknifecompile
-    implementation rootProject.glide
     annotationProcessor rootProject.glidecompile
 }
