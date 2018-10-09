@@ -1,9 +1,5 @@
 package com.oldbaby.common.app;
 
-import android.content.Context;
-import android.content.SharedPreferences;
-
-import com.oldbaby.R;
 import com.tencent.mmkv.MMKV;
 
 /**
@@ -56,8 +52,8 @@ public class PrefUtil {
         MMKV.defaultMMKV().encode(ZOOM_PAGE_TEXT_SIZE, textSize);
     }
 
-    public float getZoomPageTextSize(Context context) {
-        return MMKV.defaultMMKV().decodeFloat(ZOOM_PAGE_TEXT_SIZE, context.getResources().getDimension(R.dimen.txt_12));
+    public float getZoomPageTextSize() {
+        return MMKV.defaultMMKV().decodeFloat(ZOOM_PAGE_TEXT_SIZE, 16);
     }
 
     public void setZoomPageTextRatio(float ratio) {
@@ -69,7 +65,7 @@ public class PrefUtil {
     }
 
     public void clearAll() {
-        MMKV.defaultMMKV().removeValuesForKeys(new String[] {
+        MMKV.defaultMMKV().removeValuesForKeys(new String[]{
                 PREF_TOKEN,
                 PREF_UID,
                 ZOOM_PAGE_TEXT_RATIO,

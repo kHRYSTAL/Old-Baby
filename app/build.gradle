@@ -36,6 +36,17 @@ android {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.release
+            multiDexEnabled true
+        }
+
+        debug {
+//            applicationIdSuffix ".debug"
+            minifyEnabled false
+            signingConfig signingConfigs.debug
+            multiDexEnabled true
+            // 设置为true后 debug看不到调试信息
+//            testCoverageEnabled true
         }
     }
     sourceSets {
@@ -46,7 +57,7 @@ android {
 }
 
 dependencies {
-    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    implementation fileTree(include: ['*.jar'], dir: 'libs')
     implementation project(':oblib')
     implementation rootProject.mmkv
     implementation rootProject.jiaozi

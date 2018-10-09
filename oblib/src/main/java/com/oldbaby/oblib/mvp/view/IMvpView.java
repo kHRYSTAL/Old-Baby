@@ -5,6 +5,7 @@ import com.oldbaby.oblib.view.dialog.MultiBtnDlgAttr;
 import com.oldbaby.oblib.view.dialog.MultiBtnDlgListener;
 import com.oldbaby.oblib.view.dialog.PromptDlgAttr;
 import com.oldbaby.oblib.view.dialog.PromptDlgListener;
+import com.oldbaby.oblib.view.dialog.PromptDlgTwoBtnListener;
 import com.oldbaby.oblib.view.dialog.TipsDlgAttr;
 import com.oldbaby.oblib.view.dialog.TipsDlgListener;
 
@@ -155,6 +156,15 @@ public interface IMvpView {
      * @param listener
      */
     void showPromptDlg(String tag, PromptDlgAttr promptDlgAttr, PromptDlgListener listener);
+
+    /**
+     * 显示提示框
+     *
+     * @param tag
+     * @param promptDlgAttr
+     * @param listener
+     */
+    void showPromptDlg(String tag, PromptDlgAttr promptDlgAttr, PromptDlgListener listener, PromptDlgTwoBtnListener twoBtnListener);
 
     /**
      * 隐藏提示框

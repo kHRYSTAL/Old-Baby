@@ -21,6 +21,9 @@ public interface IPromptDlgMgr {
      */
     void show(Context context, String tag, PromptDlgAttr promptDlgAttr, PromptDlgListener listener);
 
+    void show(Context context, String tag, PromptDlgAttr promptDlgAttr, PromptDlgListener listener, PromptDlgTwoBtnListener twoBtnListener);
+
+
     /**
      * 隐藏指定的确认对话框
      *

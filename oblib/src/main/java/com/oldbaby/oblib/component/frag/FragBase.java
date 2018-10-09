@@ -30,6 +30,7 @@ import com.oldbaby.oblib.view.dialog.MultiBtnDlgListener;
 import com.oldbaby.oblib.view.dialog.ProgressDlgListener;
 import com.oldbaby.oblib.view.dialog.PromptDlgAttr;
 import com.oldbaby.oblib.view.dialog.PromptDlgListener;
+import com.oldbaby.oblib.view.dialog.PromptDlgTwoBtnListener;
 import com.oldbaby.oblib.view.dialog.TipsDlgAttr;
 import com.oldbaby.oblib.view.dialog.TipsDlgListener;
 import com.trello.rxlifecycle.FragmentEvent;
@@ -349,6 +350,13 @@ public abstract class FragBase extends Fragment implements IMvpView, IConfirmDlg
     public void showPromptDlg(String tag, PromptDlgAttr promptDlgAttr, PromptDlgListener listener) {
         if (promptDlgMgr != null) {
             promptDlgMgr.show(getActivity(), tag, promptDlgAttr, listener);
+        }
+    }
+
+    @Override
+    public void showPromptDlg(String tag, PromptDlgAttr promptDlgAttr, PromptDlgListener listener, PromptDlgTwoBtnListener twoBtnListener) {
+        if (promptDlgMgr != null) {
+            promptDlgMgr.show(getActivity(), tag, promptDlgAttr, listener, twoBtnListener);
         }
     }
 

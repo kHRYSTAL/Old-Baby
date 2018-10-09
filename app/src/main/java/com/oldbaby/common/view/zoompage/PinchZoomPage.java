@@ -164,7 +164,7 @@ public class PinchZoomPage extends NestedScrollView implements View.OnClickListe
         if (pageItems == null || pageItems.isEmpty())
             return;
         scrollTo(0, 0);
-        float defaultTextSize = PrefUtil.Instance().getZoomPageTextSize(getContext());
+        float defaultTextSize = PrefUtil.Instance().getZoomPageTextSize();
         for (int i = 0; i < pageItems.size(); i++) {
             PageItem pi = pageItems.get(i);
             if (pi.type == PageItem.TYPE_TEXT) {

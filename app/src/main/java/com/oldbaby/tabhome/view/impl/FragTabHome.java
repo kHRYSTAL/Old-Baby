@@ -1,5 +1,6 @@
 package com.oldbaby.tabhome.view.impl;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -13,6 +14,9 @@ import com.oldbaby.feed.view.impl.FragFeedTab;
 import com.oldbaby.oblib.mvp.presenter.BasePresenter;
 import com.oldbaby.oblib.mvp.view.tab.FragTabPageMvps;
 import com.oldbaby.oblib.util.MLog;
+import com.oldbaby.oblib.view.dialog.PromptDlgAttr;
+import com.oldbaby.oblib.view.dialog.PromptDlgListener;
+import com.oldbaby.oblib.view.dialog.PromptDlgTwoBtnListener;
 import com.oldbaby.oblib.view.tab.TabBarOnCreateListener;
 import com.oldbaby.oblib.view.tab.TabBarView;
 import com.oldbaby.oblib.view.tab.TabInfo;
@@ -20,9 +24,16 @@ import com.oldbaby.tabhome.model.HomeModelFactory;
 import com.oldbaby.tabhome.presenter.TabHomePresenter;
 import com.oldbaby.tabhome.view.ITabHomeView;
 import com.oldbaby.video.view.impl.FragVideoList;
+import com.yanzhenjie.permission.Action;
+import com.yanzhenjie.permission.AndPermission;
+import com.yanzhenjie.permission.Permission;
+import com.yanzhenjie.permission.Rationale;
+import com.yanzhenjie.permission.RequestExecutor;
+import com.yanzhenjie.permission.Setting;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import butterknife.ButterKnife;
@@ -39,6 +50,8 @@ public class FragTabHome extends FragTabPageMvps implements ITabHomeView {
 
     private static final String TAG = "TabHome";
     private static final String PAGE_NAME = "";
+    private static final String TAG_DIALOG_PROMPT_SETTING = "tag_dialog_prompt_setting";
+    private static final String TAG_DIALOG_PROMPT_RATIONALE = "tag_dialog_prompt_rationale";
 
     public static final int TAB_ID_FEED = 1;
     public static final int TAB_ID_VIDEO = 2;
@@ -79,7 +92,48 @@ public class FragTabHome extends FragTabPageMvps implements ITabHomeView {
         setupPresenters();
         //TODO 开启消息轮询
         //TODO 发送一个关闭splash的通知
+        // 请求通用系统权限
+        startRequestCommonPermission();
         return view;
+    }
+
+    private void startRequestCommonPermission() {
+        // 存储与读取网络状态
+        AndPermission.with(getActivity()).runtime()
+                .permission(Permission.READ_EXTERNAL_STORAGE, Permission.WRITE_EXTERNAL_STORAGE, Permission.READ_PHONE_STATE)
+                .rationale(mRationale)
+                .onDenied(new Action<List<String>>() {
+                    @Override
+                    public void onAction(List<String> permissions) {
+
+                        if (AndPermission.hasAlwaysDeniedPermission(getActivity(), permissions)) {
+                            // 这些权限被用户总是拒绝。
+                            PromptDlgAttr promptDlgAttr = new PromptDlgAttr();
+                            promptDlgAttr.title = "无法继续运行";
+                            promptDlgAttr.subTitle = "请去设置页进行授权";
+                            promptDlgAttr.cancelable = false;
+                            promptDlgAttr.showClose = false;
+
+                            promptDlgAttr.btnText = "立即授权";
+                            promptDlgAttr.btnBgResId = R.drawable.sel_bg_btn_bwhite_ssc;
+                            showPromptDlg(TAG_DIALOG_PROMPT_SETTING, promptDlgAttr, new PromptDlgListener() {
+                                @Override
+                                public void onPromptClicked(Context context, String tag, Object arg) {
+                                    hidePromptDlg(TAG_DIALOG_PROMPT_SETTING);
+                                    AndPermission.with(getActivity())
+                                            .runtime()
+                                            .setting()
+                                            .onComeback(new Setting.Action() {
+                                                @Override
+                                                public void onAction() {
+                                                    // 用户从设置回来了。
+                                                }
+                                            }).start();
+                                }
+                            });
+                        }
+                    }
+                }).start();
     }
 
     @Override
@@ -190,6 +244,40 @@ public class FragTabHome extends FragTabPageMvps implements ITabHomeView {
         };
     }
 
+    private Rationale mRationale = new Rationale() {
+        @Override
+        public void showRationale(Context context, Object data, final RequestExecutor executor) {
+            // 这里使用一个Dialog询问用户是否继续授权。
+            PromptDlgAttr promptDlgAttr = new PromptDlgAttr();
+            promptDlgAttr.title = "确定取消授权?";
+            promptDlgAttr.subTitle = "没有该功能程序将无法使用";
+            promptDlgAttr.cancelable = false;
+            promptDlgAttr.showClose = false;
+
+            promptDlgAttr.isTwoBtn = true;
+            promptDlgAttr.rightBtnText = "重新授权";
+            promptDlgAttr.rightBtnBgResId = R.drawable.sel_bg_btn_bwhite_ssc;
+            promptDlgAttr.rightBtnTextColorId = R.color.white;
+
+            promptDlgAttr.leftBtnText = "取消授权";
+            promptDlgAttr.leftBtnBgResId = R.drawable.sel_bg_btn_bwhite_ssc;
+            promptDlgAttr.leftBtnTextColorId = R.color.white;
+
+            showPromptDlg(TAG_DIALOG_PROMPT_RATIONALE, promptDlgAttr, null, new PromptDlgTwoBtnListener() {
+                @Override
+                public void onPromptLeftClicked(Context context, String tag, Object arg) {
+                    hidePromptDlg(TAG_DIALOG_PROMPT_RATIONALE);
+                    executor.cancel();
+                }
+
+                @Override
+                public void onPromptRightClicked(Context context, String tag, Object arg) {
+                    hidePromptDlg(TAG_DIALOG_PROMPT_RATIONALE);
+                    executor.execute();
+                }
+            });
+        }
+    };
 
     @Override
     public String getPageName() {

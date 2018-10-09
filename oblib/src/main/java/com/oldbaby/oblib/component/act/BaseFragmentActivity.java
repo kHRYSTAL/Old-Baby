@@ -33,6 +33,7 @@ import com.oldbaby.oblib.view.dialog.MultiBtnDlgListener;
 import com.oldbaby.oblib.view.dialog.ProgressDlgListener;
 import com.oldbaby.oblib.view.dialog.PromptDlgAttr;
 import com.oldbaby.oblib.view.dialog.PromptDlgListener;
+import com.oldbaby.oblib.view.dialog.PromptDlgTwoBtnListener;
 import com.oldbaby.oblib.view.dialog.TipsDlgAttr;
 import com.oldbaby.oblib.view.dialog.TipsDlgListener;
 import com.trello.rxlifecycle.ActivityEvent;
@@ -356,6 +357,13 @@ public abstract class BaseFragmentActivity extends AppCompatActivity implements 
     public void showPromptDlg(String tag, PromptDlgAttr promptDlgAttr, PromptDlgListener listener) {
         if (promptDlgMgr != null) {
             promptDlgMgr.show(this, tag, promptDlgAttr, listener);
+        }
+    }
+
+    @Override
+    public void showPromptDlg(String tag, PromptDlgAttr promptDlgAttr, PromptDlgListener listener, PromptDlgTwoBtnListener twoBtnListener) {
+        if (promptDlgMgr != null) {
+            promptDlgMgr.show(this, tag, promptDlgAttr, listener, twoBtnListener);
         }
     }
 

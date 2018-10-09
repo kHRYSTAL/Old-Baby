@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/transparent">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/rect_bwhite_sdiv_cmiddle"
+        android:orientation="vertical"
+        android:paddingBottom="32dp">
+
+        <ImageView
+            android:id="@+id/dlgIv"
+            android:layout_width="54dp"
+            android:layout_height="54dp"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="32dp"
+            android:src="@mipmap/ic_launcher" />
+
+        <TextView
+            android:id="@+id/dlgTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="18dp"
+            android:gravity="center"
+            android:text="联名推荐"
+            android:textColor="@color/color_f1"
+            android:textSize="@dimen/txt_18" />
+
+        <TextView
+            android:id="@+id/dlgSubTitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="30dp"
+            android:layout_marginRight="30dp"
+            android:layout_marginTop="8dp"
+            android:gravity="center"
+            android:text="这篇文章已经有人抢先推荐了哦\n你的推荐将以联名形式呈现"
+            android:textColor="@color/color_f2"
+            android:textSize="@dimen/txt_14" />
+
+        <LinearLayout
+            android:id="@+id/llTwoBtn"
+            android:layout_width="match_parent"
+            android:layout_height="42dp"
+            android:layout_marginLeft="14dp"
+            android:layout_marginRight="14dp"
+            android:layout_marginTop="26dp"
+            android:orientation="horizontal"
+            android:visibility="gone">
+
+            <Button
+                android:id="@+id/btnLeft"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_weight="1"
+                android:background="@drawable/sel_bg_btn_bwhite_ssc"
+                android:textColor="@color/color_sc"
+                android:textSize="@dimen/txt_16" />
+
+            <Button
+                android:id="@+id/btnRight"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_weight="1"
+                android:background="@drawable/sel_btn_sc_bg"
+                android:textColor="@color/white"
+                android:textSize="@dimen/txt_16" />
+
+        </LinearLayout>
+
+        <Button
+            android:id="@+id/dlgBtn"
+            android:layout_width="match_parent"
+            android:layout_height="44dp"
+            android:layout_marginLeft="36dp"
+            android:layout_marginRight="36dp"
+            android:layout_marginTop="26dp"
+            android:background="@drawable/sel_btn_sc_bg"
+            android:textColor="@color/white"
+            android:textSize="@dimen/txt_18" />
+
+        <TextView
+            android:id="@+id/tvDlgDesc"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:gravity="center"
+            android:textColor="@color/color_f2"
+            android:textSize="@dimen/txt_14"
+            android:visibility="gone" />
+
+    </LinearLayout>
+
+    <ImageView
+        android:id="@+id/ivDlgClose"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:padding="16dp"
+        android:src="@drawable/img_dlg_close_small"
+        android:visibility="gone" />
+</RelativeLayout>

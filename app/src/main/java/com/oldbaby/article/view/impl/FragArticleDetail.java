@@ -28,6 +28,15 @@ import com.oldbaby.oblib.mvp.view.FragBaseMvps;
 import com.oldbaby.oblib.util.MLog;
 import com.oldbaby.oblib.view.EmptyView;
 import com.oldbaby.oblib.view.NetErrorView;
+import com.oldbaby.oblib.view.dialog.PromptDlgAttr;
+import com.oldbaby.oblib.view.dialog.PromptDlgListener;
+import com.oldbaby.oblib.view.dialog.PromptDlgTwoBtnListener;
+import com.yanzhenjie.permission.Action;
+import com.yanzhenjie.permission.AndPermission;
+import com.yanzhenjie.permission.Permission;
+import com.yanzhenjie.permission.Rationale;
+import com.yanzhenjie.permission.RequestExecutor;
+import com.yanzhenjie.permission.Setting;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -47,6 +56,8 @@ import butterknife.ButterKnife;
 public class FragArticleDetail extends FragBaseMvps implements IArticleDetailView {
 
     private static final String TAG = FragArticleDetail.class.getSimpleName();
+    private static final String TAG_DIALOG_PROMPT_SETTING = "tag_dialog_prompt_setting";
+    private static final String TAG_DIALOG_PROMPT_RATIONALE = "tag_dialog_prompt_rationale";
     private static final String PAGE_NAME = "ArticleDetail";
 
     private static final String INK_ARTICLE_ID = "ink_article_id";
@@ -188,7 +199,48 @@ public class FragArticleDetail extends FragBaseMvps implements IArticleDetailVie
 
     @Override
     public void onSpeechSynthesizerClick() {
-        presenter.onSpeechSynthesizerClick();
+        // 授权
+        AndPermission.with(getActivity()).runtime()
+                .permission(Permission.RECORD_AUDIO)
+                .rationale(mRationale)
+                .onGranted(new Action<List<String>>() {
+                    @Override
+                    public void onAction(List<String> data) {
+                        presenter.onSpeechSynthesizerClick();
+                    }
+                })
+                .onDenied(new Action<List<String>>() {
+                    @Override
+                    public void onAction(List<String> permissions) {
+
+                        if (AndPermission.hasAlwaysDeniedPermission(getActivity(), permissions)) {
+                            // 这些权限被用户总是拒绝。
+                            PromptDlgAttr promptDlgAttr = new PromptDlgAttr();
+                            promptDlgAttr.title = "无法继续运行";
+                            promptDlgAttr.subTitle = "请去设置页进行授权";
+                            promptDlgAttr.cancelable = false;
+                            promptDlgAttr.showClose = false;
+
+                            promptDlgAttr.btnText = "立即授权";
+                            promptDlgAttr.btnBgResId = R.drawable.sel_bg_btn_bwhite_ssc;
+                            showPromptDlg(TAG_DIALOG_PROMPT_SETTING, promptDlgAttr, new PromptDlgListener() {
+                                @Override
+                                public void onPromptClicked(Context context, String tag, Object arg) {
+                                    hidePromptDlg(TAG_DIALOG_PROMPT_SETTING);
+                                    AndPermission.with(getActivity())
+                                            .runtime()
+                                            .setting()
+                                            .onComeback(new Setting.Action() {
+                                                @Override
+                                                public void onAction() {
+                                                    // 用户从设置回来了。
+                                                }
+                                            }).start();
+                                }
+                            });
+                        }
+                    }
+                }).start();
     }
 
     @Override
@@ -270,4 +322,39 @@ public class FragArticleDetail extends FragBaseMvps implements IArticleDetailVie
                 -1, 0,
                 FreeImageViewer.TYPE_SHOW_NUMBER, header);
     }
+
+    private Rationale mRationale = new Rationale() {
+        @Override
+        public void showRationale(Context context, Object data, final RequestExecutor executor) {
+            // 这里使用一个Dialog询问用户是否继续授权。
+            PromptDlgAttr promptDlgAttr = new PromptDlgAttr();
+            promptDlgAttr.title = "确定取消授权?";
+            promptDlgAttr.subTitle = "没有该功能程序将无法使用";
+            promptDlgAttr.cancelable = false;
+            promptDlgAttr.showClose = false;
+
+            promptDlgAttr.isTwoBtn = true;
+            promptDlgAttr.rightBtnText = "重新授权";
+            promptDlgAttr.rightBtnBgResId = R.drawable.sel_bg_btn_bwhite_ssc;
+            promptDlgAttr.rightBtnTextColorId = R.color.white;
+
+            promptDlgAttr.leftBtnText = "取消授权";
+            promptDlgAttr.leftBtnBgResId = R.drawable.sel_bg_btn_bwhite_ssc;
+            promptDlgAttr.leftBtnTextColorId = R.color.white;
+
+            showPromptDlg(TAG_DIALOG_PROMPT_RATIONALE, promptDlgAttr, null, new PromptDlgTwoBtnListener() {
+                @Override
+                public void onPromptLeftClicked(Context context, String tag, Object arg) {
+                    hidePromptDlg(TAG_DIALOG_PROMPT_RATIONALE);
+                    executor.cancel();
+                }
+
+                @Override
+                public void onPromptRightClicked(Context context, String tag, Object arg) {
+                    hidePromptDlg(TAG_DIALOG_PROMPT_RATIONALE);
+                    executor.execute();
+                }
+            });
+        }
+    };
 }

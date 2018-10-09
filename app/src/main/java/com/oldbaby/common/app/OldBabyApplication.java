@@ -9,6 +9,7 @@ import com.oldbaby.common.dto.DBMgr;
 import com.oldbaby.common.retrofit.HeaderInterceptor;
 import com.oldbaby.common.retrofit.RetrofitFactory;
 import com.oldbaby.common.retrofit.gson.GsonCreater;
+import com.oldbaby.common.view.dlg.mgr.PromptDlgMgr;
 import com.oldbaby.oblib.component.application.AppConfig;
 import com.oldbaby.oblib.component.application.OGApplication;
 import com.oldbaby.oblib.component.frag.FragBase;
@@ -173,8 +174,7 @@ public class OldBabyApplication extends OGApplication {
 
     @Override
     public IPromptDlgMgr createPromptDlgMgr() {
-        // TODO: 18/9/25
-        return null;
+        return new PromptDlgMgr();
     }
 
     @Override
