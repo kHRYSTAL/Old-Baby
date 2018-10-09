@@ -8,6 +8,7 @@ import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Looper;
 import android.view.Gravity;
 import android.view.MotionEvent;
 import android.view.View;
@@ -26,6 +27,7 @@ import com.oldbaby.oblib.R;
 import com.oldbaby.oblib.component.act.BaseFragmentActivity;
 import com.oldbaby.oblib.component.act.TitleType;
 import com.oldbaby.oblib.image.GalleryListener;
+import com.oldbaby.oblib.image.ImageCache;
 import com.oldbaby.oblib.image.NewsGallery;
 import com.oldbaby.oblib.rxjava.RxBus;
 import com.oldbaby.oblib.util.DensityUtil;
@@ -374,33 +376,8 @@ public class FreeImageViewer extends BaseFragmentActivity implements GalleryList
                 ToastUtil.showLong("已保存到相册");
             } else if (item instanceof String) {
                 final String url = (String) item;
-                new Thread() {
-                    @Override
-                    public void run() {
-                        FutureTarget<File> future = Glide.with(FreeImageViewer.this)
-                                .load(lazyHeaders != null ? new GlideUrl(url, lazyHeaders) : url)
-                                .downloadOnly(Target.SIZE_ORIGINAL, Target.SIZE_ORIGINAL);
-                        String path = "";
-                        try {
-                            File cacheFile = future.get();
-                            path = cacheFile.getAbsolutePath();
-                        } catch (InterruptedException e) {
-                            e.printStackTrace();
-                        } catch (ExecutionException e) {
-                            e.printStackTrace();
-                        }
-                        if (StringUtil.isNullOrEmpty(path))
-                            return;
-                        String imageName = FileUtil.convertFileNameFromUrl(url);
-                        File sdcardFileDir = FileMgr.Instance().getDir(FileMgr.DirType.IMAGE);
-
-                        File sdcardFile = new File(sdcardFileDir, imageName + ".jpg");
-                        FileUtil.copyFile(new File(path), sdcardFile);
-                        sendBroadcast(new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE,
-                                Uri.fromFile(sdcardFile)));
-                        ToastUtil.showLong("已保存到相册");
-                    }
-                }.start();
+                // 保存图片至本地
+                new ImageCache(this).execute(url);
             } else {
                 ToastUtil.showLong("图片格式错误");
             }
