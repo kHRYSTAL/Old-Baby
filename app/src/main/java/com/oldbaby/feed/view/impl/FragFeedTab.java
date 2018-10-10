@@ -15,15 +15,18 @@ import com.bumptech.glide.load.model.GlideUrl;
 import com.bumptech.glide.load.model.Headers;
 import com.oldbaby.R;
 import com.oldbaby.article.view.impl.FragArticleDetail;
+import com.oldbaby.common.base.TitleBarProxy;
 import com.oldbaby.common.bean.Article;
 import com.oldbaby.common.util.SpiderHeader;
 import com.oldbaby.feed.model.impl.FeedTabModel;
 import com.oldbaby.feed.presenter.FeedTabPresenter;
 import com.oldbaby.feed.view.IFeedTabView;
+import com.oldbaby.oblib.component.act.TitleType;
 import com.oldbaby.oblib.mvp.view.pullrefresh.FragPullRecyclerView;
 import com.oldbaby.oblib.mvp.view.pullrefresh.PullRecyclerViewAdapter;
 import com.oldbaby.oblib.mvp.view.pullrefresh.RecyclerViewHolder;
 import com.oldbaby.oblib.util.StringUtil;
+import com.oldbaby.oblib.view.title.OnTitleClickListener;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -82,7 +85,24 @@ public class FragFeedTab extends FragPullRecyclerView<Article, FeedTabPresenter>
                 new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
         // TODO: 18/10/7 增加搜索栏 holder
         ButterKnife.bind(this, rootView);
+        initTitleBar(rootView);
         return rootView;
+    }
+
+    // 初始化titlebar
+    private void initTitleBar(View view) {
+        TitleBarProxy titleBar = new TitleBarProxy();
+        titleBar.configTitle(view, TitleType.TITLE_LAYOUT,
+                new OnTitleClickListener() {
+
+                    @Override
+                    public void onTitleClicked(View view, int tagId) {
+                        switch (tagId) {
+
+                        }
+                    }
+                });
+        titleBar.setTitle("资讯");
     }
 
     @Override

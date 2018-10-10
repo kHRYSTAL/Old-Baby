@@ -7,19 +7,20 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 
 import com.bumptech.glide.Glide;
-import com.bumptech.glide.load.model.GlideUrl;
-import com.bumptech.glide.load.model.Headers;
 import com.oldbaby.R;
-import com.oldbaby.common.bean.Feed;
-import com.oldbaby.common.util.SpiderHeader;
+import com.oldbaby.common.base.TitleBarProxy;
+import com.oldbaby.common.bean.Article;
+import com.oldbaby.oblib.component.act.TitleType;
 import com.oldbaby.oblib.mvp.view.pullrefresh.FragPullRecyclerView;
 import com.oldbaby.oblib.mvp.view.pullrefresh.PullRecyclerViewAdapter;
 import com.oldbaby.oblib.mvp.view.pullrefresh.RecyclerViewHolder;
-import com.oldbaby.video.model.VideoListModel;
-import com.oldbaby.video.presenter.VideoListPresenter;
-import com.oldbaby.video.view.IVideoListView;
+import com.oldbaby.oblib.view.title.OnTitleClickListener;
+import com.oldbaby.video.model.VideoTabModel;
+import com.oldbaby.video.presenter.VideoTabPresenter;
+import com.oldbaby.video.view.IVideoTabView;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -35,14 +36,19 @@ import cn.jzvd.JzvdStd;
  * update time:
  * email: 723526676@qq.com
  */
-public class FragVideoList extends FragPullRecyclerView<Feed, VideoListPresenter> implements IVideoListView {
+public class FragVideoTab extends FragPullRecyclerView<Article, VideoTabPresenter> implements IVideoTabView {
 
-    public static final String PAGE_NAME = FragVideoList.class.getSimpleName();
-    private VideoListPresenter presenter;
+    public static final String PAGE_NAME = FragVideoTab.class.getSimpleName();
+    private VideoTabPresenter presenter;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = super.onCreateView(inflater, container, savedInstanceState);
+
+        LinearLayout rootView = (LinearLayout) inflater
+                .inflate(R.layout.frag_tab_item, container, false);
+        rootView.addView(super.onCreateView(inflater, container, savedInstanceState),
+                new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
+        ButterKnife.bind(this, rootView);
         // 划出屏幕停止播放
         internalView.addOnChildAttachStateChangeListener(new RecyclerView.OnChildAttachStateChangeListener() {
             @Override
@@ -63,8 +69,25 @@ public class FragVideoList extends FragPullRecyclerView<Feed, VideoListPresenter
         });
         // 自动播放
         internalView.addOnScrollListener(new AutoPlayScrollListener());
-        return view;
+        initTitleBar(rootView);
+        return rootView;
 
+    }
+
+    // 初始化titlebar
+    private void initTitleBar(View view) {
+        TitleBarProxy titleBar = new TitleBarProxy();
+        titleBar.configTitle(view, TitleType.TITLE_LAYOUT,
+                new OnTitleClickListener() {
+
+                    @Override
+                    public void onTitleClicked(View view, int tagId) {
+                        switch (tagId) {
+
+                        }
+                    }
+                });
+        titleBar.setTitle("视频");
     }
 
     @Override
@@ -86,9 +109,9 @@ public class FragVideoList extends FragPullRecyclerView<Feed, VideoListPresenter
     }
 
     @Override
-    protected VideoListPresenter makePullPresenter() {
-        presenter = new VideoListPresenter();
-        presenter.setModel(new VideoListModel());
+    protected VideoTabPresenter makePullPresenter() {
+        presenter = new VideoTabPresenter();
+        presenter.setModel(new VideoTabModel());
         return presenter;
     }
 
@@ -107,9 +130,9 @@ public class FragVideoList extends FragPullRecyclerView<Feed, VideoListPresenter
             ButterKnife.bind(this, itemView);
         }
 
-        public void fill(Feed feed) {
-            jzvdStd.setUp(feed.url, feed.title, Jzvd.SCREEN_WINDOW_LIST);
-            Glide.with(jzvdStd.getContext()).load(feed.thumb).into(jzvdStd.thumbImageView);
+        public void fill(Article article) {
+            jzvdStd.setUp(article.videoUrl, article.title, Jzvd.SCREEN_WINDOW_LIST);
+            Glide.with(jzvdStd.getContext()).load(article.thumbPicUrl).into(jzvdStd.thumbImageView);
         }
 
         @Override

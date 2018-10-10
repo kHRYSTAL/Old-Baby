@@ -8,6 +8,9 @@ import com.oldbaby.R;
 import com.oldbaby.common.base.FragBaseActivity;
 import com.oldbaby.oblib.component.act.TitleType;
 
+import cn.jzvd.Jzvd;
+import cn.jzvd.JzvdStd;
+
 /**
  * usage:
  * author: kHRYSTAL
@@ -54,5 +57,14 @@ public class TabHome extends FragBaseActivity {
         if (fragTabHome != null && fragTabHome.isAdded()) {
             fragTabHome.onActivityResult(requestCode, resultCode, data);
         }
+    }
+
+    @Override
+    public void onBackPressed() {
+        // 如果为全屏播放 点击返回为退出全屏 不做任何操作
+        if (Jzvd.backPress()) {
+            return;
+        }
+        super.onBackPressed();
     }
 }

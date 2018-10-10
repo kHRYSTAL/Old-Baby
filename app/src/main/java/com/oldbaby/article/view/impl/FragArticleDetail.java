@@ -222,7 +222,7 @@ public class FragArticleDetail extends FragBaseMvps implements IArticleDetailVie
                             promptDlgAttr.showClose = false;
 
                             promptDlgAttr.btnText = "立即授权";
-                            promptDlgAttr.btnBgResId = R.drawable.sel_bg_btn_bwhite_ssc;
+                            promptDlgAttr.btnBgResId = R.drawable.sel_btn_sc_bg;
                             showPromptDlg(TAG_DIALOG_PROMPT_SETTING, promptDlgAttr, new PromptDlgListener() {
                                 @Override
                                 public void onPromptClicked(Context context, String tag, Object arg) {
@@ -335,11 +335,11 @@ public class FragArticleDetail extends FragBaseMvps implements IArticleDetailVie
 
             promptDlgAttr.isTwoBtn = true;
             promptDlgAttr.rightBtnText = "重新授权";
-            promptDlgAttr.rightBtnBgResId = R.drawable.sel_bg_btn_bwhite_ssc;
+            promptDlgAttr.rightBtnBgResId = R.drawable.sel_btn_sc_bg;
             promptDlgAttr.rightBtnTextColorId = R.color.white;
 
             promptDlgAttr.leftBtnText = "取消授权";
-            promptDlgAttr.leftBtnBgResId = R.drawable.sel_bg_btn_bwhite_ssc;
+            promptDlgAttr.leftBtnBgResId = R.drawable.sel_btn_sc_bg;
             promptDlgAttr.leftBtnTextColorId = R.color.white;
 
             showPromptDlg(TAG_DIALOG_PROMPT_RATIONALE, promptDlgAttr, null, new PromptDlgTwoBtnListener() {

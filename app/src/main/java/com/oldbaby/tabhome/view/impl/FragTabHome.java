@@ -1,6 +1,7 @@
 package com.oldbaby.tabhome.view.impl;
 
 import android.content.Context;
+import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -23,7 +24,7 @@ import com.oldbaby.oblib.view.tab.TabInfo;
 import com.oldbaby.tabhome.model.HomeModelFactory;
 import com.oldbaby.tabhome.presenter.TabHomePresenter;
 import com.oldbaby.tabhome.view.ITabHomeView;
-import com.oldbaby.video.view.impl.FragVideoList;
+import com.oldbaby.video.view.impl.FragVideoTab;
 import com.yanzhenjie.permission.Action;
 import com.yanzhenjie.permission.AndPermission;
 import com.yanzhenjie.permission.Permission;
@@ -58,8 +59,8 @@ public class FragTabHome extends FragTabPageMvps implements ITabHomeView {
     public static final int TAB_ID_PROFILE = 3;
 
     // TODO: 18/9/27 需要替换类型
-    FragFeedTab fragFeedList; // feed流
-    FragVideoList fragVideo; // 视频流
+    FragFeedTab fragFeed; // feed流
+    FragVideoTab fragVideo; // 视频流
     Fragment fragProfile; // 个人中心
 
     ArrayList<TabInfo> tabs; // tab集合 按照从左到右顺序
@@ -93,8 +94,14 @@ public class FragTabHome extends FragTabPageMvps implements ITabHomeView {
         //TODO 开启消息轮询
         //TODO 发送一个关闭splash的通知
         // 请求通用系统权限
+        configJZVD();
         startRequestCommonPermission();
         return view;
+    }
+
+    private void configJZVD() {
+        Jzvd.FULLSCREEN_ORIENTATION = ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE;
+        Jzvd.NORMAL_ORIENTATION = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT;
     }
 
     private void startRequestCommonPermission() {
@@ -115,7 +122,7 @@ public class FragTabHome extends FragTabPageMvps implements ITabHomeView {
                             promptDlgAttr.showClose = false;
 
                             promptDlgAttr.btnText = "立即授权";
-                            promptDlgAttr.btnBgResId = R.drawable.sel_bg_btn_bwhite_ssc;
+                            promptDlgAttr.btnBgResId = R.drawable.sel_btn_sc_bg;
                             showPromptDlg(TAG_DIALOG_PROMPT_SETTING, promptDlgAttr, new PromptDlgListener() {
                                 @Override
                                 public void onPromptClicked(Context context, String tag, Object arg) {
@@ -165,11 +172,11 @@ public class FragTabHome extends FragTabPageMvps implements ITabHomeView {
         MLog.d(TAG, "createTabPage : " + tabInfo.name);
         switch (tabInfo.tabId) {
             case TAB_ID_FEED: {
-                fragFeedList = new FragFeedTab();
-                return fragFeedList;
+                fragFeed = new FragFeedTab();
+                return fragFeed;
             }
             case TAB_ID_VIDEO: {
-                fragVideo = new FragVideoList();
+                fragVideo = new FragVideoTab();
                 return fragVideo;
             }
             case TAB_ID_PROFILE: {
@@ -184,7 +191,7 @@ public class FragTabHome extends FragTabPageMvps implements ITabHomeView {
     @Override
     protected ArrayList<TabInfo> tabToAdded() {
         tabs = new ArrayList<>();
-        TabInfo tabInfo = new TabInfo("全部", TAB_ID_FEED);
+        TabInfo tabInfo = new TabInfo("资讯", TAB_ID_FEED);
         tabInfo.arg1 = R.drawable.sel_tab_feed;
         tabs.add(tabInfo);
 
@@ -256,11 +263,11 @@ public class FragTabHome extends FragTabPageMvps implements ITabHomeView {
 
             promptDlgAttr.isTwoBtn = true;
             promptDlgAttr.rightBtnText = "重新授权";
-            promptDlgAttr.rightBtnBgResId = R.drawable.sel_bg_btn_bwhite_ssc;
+            promptDlgAttr.rightBtnBgResId = R.drawable.sel_btn_sc_bg;
             promptDlgAttr.rightBtnTextColorId = R.color.white;
 
             promptDlgAttr.leftBtnText = "取消授权";
-            promptDlgAttr.leftBtnBgResId = R.drawable.sel_bg_btn_bwhite_ssc;
+            promptDlgAttr.leftBtnBgResId = R.drawable.sel_btn_sc_bg;
             promptDlgAttr.leftBtnTextColorId = R.color.white;
 
             showPromptDlg(TAG_DIALOG_PROMPT_RATIONALE, promptDlgAttr, null, new PromptDlgTwoBtnListener() {

@@ -18,8 +18,14 @@ import java.util.List;
  */
 public class Article extends OrmDto implements LogicIdentifiable {
 
+    public static final int TYPE_ARTICLE_COMMON = 11;
+    public static final int TYPE_VIDEO_COMMON = 31;
+
     @SerializedName("id")
     public String id;
+
+    @SerializedName("type")
+    public int type;
 
     @SerializedName("title")
     public String title;
@@ -27,17 +33,23 @@ public class Article extends OrmDto implements LogicIdentifiable {
     @SerializedName("keywords")
     public String keywords;
 
+    // 文章副标题
     @SerializedName("sub_title")
     public String subTitle;
+
+    // 视频链接
+    @SerializedName("video_url")
+    public String videoUrl;
+
+    // 视频时长
+    @SerializedName("duration")
+    public String duration;
 
     @SerializedName("thumb_pic_url")
     public String thumbPicUrl;
 
     @SerializedName("insert_method")
     public Integer insertMethod;
-
-    @SerializedName("duration")
-    public String duration;
 
     @SerializedName("source")
     public String source;
@@ -69,9 +81,14 @@ public class Article extends OrmDto implements LogicIdentifiable {
     @SerializedName("update_time")
     public String updateTime;
 
+    // 文章详情
     @SerializedName("content")
     public String content;
 
+    @SerializedName("tag")
+    public ArticleTag tag;
+
+    // 获取文章内容
     public List<PageItem> getArticle() {
         if (StringUtil.isNullOrEmpty(content))
             return null;

@@ -5,7 +5,7 @@
     android:orientation="vertical">
 
     <include
-        android:id="@+id/custom_titile"
+        android:id="@+id/custom_title"
         layout="@layout/titlebar_with_image"
         android:layout_width="fill_parent"
         android:layout_height="@dimen/title_height" />
