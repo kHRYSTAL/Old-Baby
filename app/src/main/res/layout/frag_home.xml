@@ -4,24 +4,25 @@
     android:layout_height="fill_parent"
     android:background="@color/white">
 
+    <FrameLayout
+        android:id="@id/frag_tab_page_container"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@id/frag_tab_page_tab" />
+
+    <View
+        android:id="@+id/fake_tab_bar"
+        android:layout_width="fill_parent"
+        android:layout_height="60dp"
+        android:layout_alignParentBottom="true"
+        android:background="@drawable/tab_navigation_left" />
+
     <com.oldbaby.oblib.view.tab.TabBarView
         android:id="@id/frag_tab_page_tab"
         android:layout_width="fill_parent"
         android:layout_height="@dimen/app_titlebar_height"
         android:layout_alignParentBottom="true"
-        android:background="@color/white" />
-
-    <View
-        android:id="@+id/vHomeDiv"
-        android:layout_width="fill_parent"
-        android:layout_height="@dimen/app_line_height"
-        android:layout_above="@id/frag_tab_page_tab"
-        android:background="@color/color_div" />
-
-    <FrameLayout
-        android:id="@id/frag_tab_page_container"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_above="@id/vHomeDiv" />
+        android:background="@color/transparent"
+        />
 
 </RelativeLayout>

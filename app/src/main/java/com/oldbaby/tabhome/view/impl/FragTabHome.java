@@ -8,12 +8,17 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationSet;
+import android.view.animation.ScaleAnimation;
+import android.view.animation.TranslateAnimation;
 
 import com.oldbaby.R;
 import com.oldbaby.common.view.TabButton;
 import com.oldbaby.feed.view.impl.FragFeedTab;
 import com.oldbaby.oblib.mvp.presenter.BasePresenter;
 import com.oldbaby.oblib.mvp.view.tab.FragTabPageMvps;
+import com.oldbaby.oblib.util.DensityUtil;
 import com.oldbaby.oblib.util.MLog;
 import com.oldbaby.oblib.view.dialog.PromptDlgAttr;
 import com.oldbaby.oblib.view.dialog.PromptDlgListener;
@@ -37,6 +42,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import butterknife.BindView;
 import butterknife.ButterKnife;
 import cn.jzvd.Jzvd;
 
@@ -64,6 +70,8 @@ public class FragTabHome extends FragTabPageMvps implements ITabHomeView {
     Fragment fragProfile; // 个人中心
 
     ArrayList<TabInfo> tabs; // tab集合 按照从左到右顺序
+    @BindView(R.id.fake_tab_bar)
+    View fakeTabBar;
 
     // TODO 拉取闪屏 presenter
 
@@ -196,11 +204,11 @@ public class FragTabHome extends FragTabPageMvps implements ITabHomeView {
         tabs.add(tabInfo);
 
         tabInfo = new TabInfo("视频", TAB_ID_VIDEO);
-        tabInfo.arg1 = R.drawable.sel_tab_feed;
+        tabInfo.arg1 = R.drawable.sel_tab_video;
         tabs.add(tabInfo);
 
-        tabInfo = new TabInfo("设置", TAB_ID_PROFILE);
-        tabInfo.arg1 = R.drawable.sel_tab_feed;
+        tabInfo = new TabInfo("我的", TAB_ID_PROFILE);
+        tabInfo.arg1 = R.drawable.sel_tab_profile;
         tabs.add(tabInfo);
         return tabs;
     }
@@ -209,7 +217,7 @@ public class FragTabHome extends FragTabPageMvps implements ITabHomeView {
     protected boolean needPreLoad(TabInfo tabInfo) {
         if (tabInfo != null) {
             //如果tab为 邻里、人脉、我的,则预加载
-            if (tabInfo.tabId == TAB_ID_FEED || tabInfo.tabId == TAB_ID_VIDEO || tabInfo.tabId == TAB_ID_PROFILE) {
+            if (tabInfo.tabId == TAB_ID_FEED || tabInfo.tabId == TAB_ID_VIDEO) {
                 return true;
             }
         }
@@ -223,6 +231,7 @@ public class FragTabHome extends FragTabPageMvps implements ITabHomeView {
 
     protected TabBarOnCreateListener getCreateTabListener() {
         return new TabBarOnCreateListener() {
+
             @Override
             public TabButton createTabView(TabBarView view, TabInfo tab, int atIndex) {
                 TabButton tb = new TabButton(getActivity(), tab.tabId);
@@ -233,10 +242,30 @@ public class FragTabHome extends FragTabPageMvps implements ITabHomeView {
 
             @Override
             public void selectTabView(View view, TabInfo tabInfo) {
+                MLog.e(TAG, "选中:", tabInfo.name);
                 TabButton tb = (TabButton) view;
                 tb.icon.setSelected(true);
-                tb.text.setTextColor(getResources().getColor(R.color.tabbar_text_sel_color));
+//                tb.text.setTextColor(getResources().getColor(R.color.tabbar_text_sel_color));
+                tb.text.setTextColor(getResources().getColor(
+                        R.color.color_black_45));
                 tb.hideRedDot();
+                final ScaleAnimation selectScaleAnim = new ScaleAnimation(1.0f, 1.4f, 1.0f, 1.4f,
+                        Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF, 0.5f);
+                final TranslateAnimation selectTranslateAnim = new TranslateAnimation(0, 0, 0, -DensityUtil.dip2px(1));
+                AnimationSet selectAnimationSet = new AnimationSet(true);
+                selectAnimationSet.setDuration(200);//设置动画持续时间
+                selectAnimationSet.setFillAfter(true);
+                selectAnimationSet.addAnimation(selectScaleAnim);
+                selectAnimationSet.addAnimation(selectTranslateAnim);
+                tb.startAnimation(selectAnimationSet);
+                int bgRes = R.drawable.tab_navigation_left;
+                if (tabInfo.tabId == TAB_ID_FEED)
+                    bgRes = R.drawable.tab_navigation_left;
+                else if (tabInfo.tabId == TAB_ID_VIDEO)
+                    bgRes = R.drawable.tab_navigation_middle;
+                else
+                    bgRes = R.drawable.tab_navigation_right;
+                fakeTabBar.setBackground(getResources().getDrawable(bgRes));
                 // 切换tab时 所有视频都暂停
                 Jzvd.releaseAllVideos();
             }
@@ -244,6 +273,16 @@ public class FragTabHome extends FragTabPageMvps implements ITabHomeView {
             @Override
             public void unSelectTabView(View view) {
                 TabButton tb = (TabButton) view;
+                MLog.e(TAG, "取消选中:", tb.text.getText());
+                final ScaleAnimation unSelectScaleAnim = new ScaleAnimation(1.4f, 1.0f, 1.4f, 1.0f,
+                        Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF, 0.5f);
+                final TranslateAnimation unSelectTranslateAnim = new TranslateAnimation(0, 0, -DensityUtil.dip2px(1), 0);
+                AnimationSet unSelectAnimationSet = new AnimationSet(true);
+                unSelectAnimationSet.setDuration(200);//设置动画持续时间
+                unSelectAnimationSet.setFillAfter(true);
+                unSelectAnimationSet.addAnimation(unSelectScaleAnim);
+                unSelectAnimationSet.addAnimation(unSelectTranslateAnim);
+                tb.startAnimation(unSelectAnimationSet);
                 tb.icon.setSelected(false);
                 tb.text.setTextColor(getResources().getColor(
                         R.color.color_black_45));

@@ -46,7 +46,7 @@ public class FragVideoTab extends FragPullRecyclerView<Article, VideoTabPresente
 
         LinearLayout rootView = (LinearLayout) inflater
                 .inflate(R.layout.frag_tab_item, container, false);
-        rootView.addView(super.onCreateView(inflater, container, savedInstanceState),
+        ((LinearLayout) rootView.findViewById(R.id.llContainer)).addView(super.onCreateView(inflater, container, savedInstanceState),
                 new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
         ButterKnife.bind(this, rootView);
         // 划出屏幕停止播放

@@ -4,16 +4,31 @@
     android:layout_height="fill_parent"
     android:orientation="vertical">
 
-    <include
-        android:id="@+id/custom_title"
-        layout="@layout/titlebar_with_image"
-        android:layout_width="fill_parent"
-        android:layout_height="@dimen/title_height" />
-
-    <RelativeLayout
-        android:id="@+id/rlContainer"
+    <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:visibility="gone" />
+        android:layout_height="match_parent">
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="160dp"
+            android:background="@drawable/tab_background" />
+        <include
+            android:id="@+id/custom_title"
+            layout="@layout/titlebar_with_image"
+            android:layout_width="fill_parent"
+            android:layout_height="@dimen/title_height"
+            android:visibility="invisible"/>
+
+        <LinearLayout
+            android:id="@+id/llContainer"
+            android:layout_marginTop="@dimen/app_titlebar_height"
+            android:clipToPadding="false"
+            android:clipChildren="false"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+        </LinearLayout>
+    </FrameLayout>
+
 
 </LinearLayout>
