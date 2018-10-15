@@ -2,6 +2,7 @@ package com.oldbaby.video.view.impl;
 
 import android.graphics.Rect;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -49,6 +50,7 @@ public class FragVideoTab extends FragPullRecyclerView<Article, VideoTabPresente
         ((LinearLayout) rootView.findViewById(R.id.llContainer)).addView(super.onCreateView(inflater, container, savedInstanceState),
                 new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
         ButterKnife.bind(this, rootView);
+        initView();
         // 划出屏幕停止播放
         internalView.addOnChildAttachStateChangeListener(new RecyclerView.OnChildAttachStateChangeListener() {
             @Override
@@ -71,6 +73,10 @@ public class FragVideoTab extends FragPullRecyclerView<Article, VideoTabPresente
         internalView.addOnScrollListener(new AutoPlayScrollListener());
         initTitleBar(rootView);
         return rootView;
+
+    }
+
+    private void initView() {
 
     }
 
@@ -106,6 +112,13 @@ public class FragVideoTab extends FragPullRecyclerView<Article, VideoTabPresente
             }
         };
         return adapter;
+    }
+
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        pullView.setBackgroundColor(getResources().getColor(R.color.transparent));
+        internalView.setBackgroundColor(getResources().getColor(R.color.transparent));
     }
 
     @Override

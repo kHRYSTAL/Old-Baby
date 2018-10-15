@@ -64,6 +64,18 @@ public class TabHome extends FragBaseActivity {
     }
 
     @Override
+    protected void onResume() {
+        super.onResume();
+        Jzvd.goOnPlayOnResume();
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        Jzvd.goOnPlayOnPause();
+    }
+
+    @Override
     public void onBackPressed() {
         // 如果为全屏播放 点击返回为退出全屏 不做任何操作
         if (Jzvd.backPress()) {
