@@ -1,7 +1,8 @@
 package com.oldbaby.common.base;
 
-import android.content.ComponentName;
 import android.content.Intent;
+import android.graphics.Color;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,6 +10,7 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 
 import com.oldbaby.R;
+import com.oldbaby.common.util.statusbar.BarHide;
 import com.oldbaby.common.util.statusbar.ImmersionBar;
 import com.oldbaby.oblib.component.act.BaseFragmentActivity;
 import com.oldbaby.oblib.component.act.TitleType;
@@ -71,7 +73,7 @@ public abstract class FragBaseActivity extends BaseFragmentActivity implements O
             switch (titleType()) {
                 case TitleType.TITLE_LAYOUT:
                     viewTitle = inflater.inflate(R.layout.titlebar_with_image, null);
-                break;
+                    break;
             }
             layoutForInfo = new RelativeLayout(this);
             layoutForInfo.setId(R.id.frag_container_rl);
@@ -195,5 +197,10 @@ public abstract class FragBaseActivity extends BaseFragmentActivity implements O
     public void updateTitleBarAndStatusBar(int resId) {
         updateStatusBarColor(resId);
         updateTitleBarColor(resId);
+    }
+
+    @Override
+    public void hideStatusBar() {
+        ImmersionBar.with(this).keyboardEnable(true).hideBar(BarHide.FLAG_HIDE_STATUS_BAR).init();
     }
 }

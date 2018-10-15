@@ -64,17 +64,16 @@ public class FragTabHome extends FragTabPageMvps implements ITabHomeView {
     public static final int TAB_ID_VIDEO = 2;
     public static final int TAB_ID_PROFILE = 3;
 
-    // TODO: 18/9/27 需要替换类型
     FragFeedTab fragFeed; // feed流
     FragVideoTab fragVideo; // 视频流
     Fragment fragProfile; // 个人中心
 
     ArrayList<TabInfo> tabs; // tab集合 按照从左到右顺序
+
     @BindView(R.id.fake_tab_bar)
     View fakeTabBar;
 
-    // TODO 拉取闪屏 presenter
-
+    // TODO 拉取闪屏预填充数据 presenter
 
     @Override
     protected Map<String, BasePresenter> createPresenters() {

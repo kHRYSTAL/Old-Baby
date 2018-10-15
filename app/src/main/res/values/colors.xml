@@ -26,6 +26,7 @@
     <!-- no common colors -->
 
     <!-- app color -->
+    <color name="color_main">#FF23CEFC</color>
     <color name="color_sc">#FFCEAD7E</color>
     <color name="color_sc_p">#ffC09251</color>
     <color name="color_sc_d">#4cCEAD7E</color>

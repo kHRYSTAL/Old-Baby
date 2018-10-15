@@ -315,6 +315,11 @@ public class FreeImageViewer extends BaseFragmentActivity implements GalleryList
 
     }
 
+    @Override
+    public void hideStatusBar() {
+
+    }
+
     public void setRightBtnText() {
         switch (rightBtnIndex) {
             case BUTTON_SAVE:

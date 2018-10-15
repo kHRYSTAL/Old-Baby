@@ -1,15 +1,18 @@
 package com.oldbaby.tabhome.view.impl;
 
 import android.content.Intent;
+import android.graphics.Color;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.FragmentTransaction;
+import android.view.View;
 
 import com.oldbaby.R;
 import com.oldbaby.common.base.FragBaseActivity;
+import com.oldbaby.common.util.statusbar.ImmersionBar;
 import com.oldbaby.oblib.component.act.TitleType;
 
 import cn.jzvd.Jzvd;
-import cn.jzvd.JzvdStd;
 
 /**
  * usage:
@@ -32,6 +35,7 @@ public class TabHome extends FragBaseActivity {
     @Override
     public void onContinueCreate(Bundle savedInstanceState) {
         super.onContinueCreate(savedInstanceState);
+        ImmersionBar.with(this).fullScreen(true).init();
         //TODO 在splash添加后处理intent操作与rxbus操作
         addFragment();
     }

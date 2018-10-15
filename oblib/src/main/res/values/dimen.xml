@@ -1,6 +1,7 @@
 <resources>
 
     <dimen name="title_height">48dp</dimen>
+    <dimen name="title_status_height">72dp</dimen>
     <dimen name="shrink_move_size">20dp</dimen>
 
     <item name="fling_divider" type="integer">5</item>

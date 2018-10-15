@@ -498,4 +498,6 @@ public abstract class BaseFragmentActivity extends AppCompatActivity implements 
 
     // 修改状态栏和标题栏颜色
     public abstract void updateTitleBarAndStatusBar(int resId);
+
+    public abstract void hideStatusBar();
 }
