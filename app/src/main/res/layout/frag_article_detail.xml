@@ -2,20 +2,50 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
-    <com.oldbaby.common.view.zoompage.PinchZoomPage
-        android:id="@+id/zoomPage"
+
+    <FrameLayout
+        android:id="@+id/pageContainer"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
-    </com.oldbaby.common.view.zoompage.PinchZoomPage>
+        <!--内层布局-->
+        <include layout="@layout/detail_article_inside_layout" />
+        <!--外层布局-->
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <include layout="@layout/detail_article_outside_layout" />
+
+            <!-- 播放器 -->
+            <RelativeLayout
+                android:id="@+id/rlBottomLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:layout_gravity="bottom"
+                android:orientation="vertical">
+
+                <com.oldbaby.common.view.articleplayer.ArticleSpeakPlayer
+                    android:id="@+id/articleSpeakPlayer"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginBottom="20dp"></com.oldbaby.common.view.articleplayer.ArticleSpeakPlayer>
+            </RelativeLayout>
+        </FrameLayout>
+    </FrameLayout>
+
     <com.oldbaby.oblib.view.NetErrorView
         android:id="@+id/errorView"
-        android:visibility="gone"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
-    </com.oldbaby.oblib.view.NetErrorView>
+        android:layout_height="match_parent"
+        android:background="@color/white"
+        android:visibility="gone"></com.oldbaby.oblib.view.NetErrorView>
+
     <com.oldbaby.oblib.view.EmptyView
         android:id="@+id/emptyView"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
-    </com.oldbaby.oblib.view.EmptyView>
+        android:layout_height="match_parent"
+        android:background="@color/white"
+        android:visibility="gone"></com.oldbaby.oblib.view.EmptyView>
 </FrameLayout>

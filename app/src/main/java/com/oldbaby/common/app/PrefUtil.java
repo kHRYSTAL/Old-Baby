@@ -53,7 +53,7 @@ public class PrefUtil {
     }
 
     public float getZoomPageTextSize() {
-        return MMKV.defaultMMKV().decodeFloat(ZOOM_PAGE_TEXT_SIZE, 16);
+        return MMKV.defaultMMKV().decodeFloat(ZOOM_PAGE_TEXT_SIZE, 20.0f);
     }
 
     public void setZoomPageTextRatio(float ratio) {

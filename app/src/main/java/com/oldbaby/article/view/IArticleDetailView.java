@@ -31,9 +31,9 @@ public interface IArticleDetailView extends IMvpView {
 
     void setDataToView(List<PageItem> items);
 
-    void setPlayButtonText(String text);
-
-    void hidePlayButtonText();
+    void setPlayButtonType(int type);
+    void hidePlayer();
+    void showPlayer();
 
     void startSpeak(int pos);
 
@@ -42,5 +42,9 @@ public interface IArticleDetailView extends IMvpView {
     void setReferer(String referer);
 
     void watchImage(int imagePosition, HashMap<String, String> header);
+
+    void setArticleHeader(String title, String source, String pbTime);
+
+    void setCover(String refer, String url);
 
 }

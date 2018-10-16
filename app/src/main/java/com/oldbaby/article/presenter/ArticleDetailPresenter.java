@@ -3,7 +3,6 @@ package com.oldbaby.article.presenter;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 
-import com.bumptech.glide.load.model.LazyHeaders;
 import com.iflytek.cloud.ErrorCode;
 import com.iflytek.cloud.InitListener;
 import com.iflytek.cloud.SpeechError;
@@ -25,6 +24,9 @@ import java.util.List;
 
 import rx.Subscriber;
 
+import static com.oldbaby.common.view.articleplayer.ArticleSpeakPlayer.TYPE_PAUSE;
+import static com.oldbaby.common.view.articleplayer.ArticleSpeakPlayer.TYPE_PLAY;
+
 /**
  * usage:
  * author: kHRYSTAL
@@ -35,6 +37,8 @@ import rx.Subscriber;
 public class ArticleDetailPresenter extends BasePresenter<IArticleDetailModel, IArticleDetailView> {
 
     private static final String TAG = ArticleDetailPresenter.class.getSimpleName();
+    // 是否点击图片跳转到查看大图 如果是 则语音合成不暂停 否则暂停 注意在 onResume时要判断还原
+    private boolean isClickImage;
 
     // 语音合成对象
     private SpeechSynthesizer mSpeechSynthesizer;
@@ -75,12 +79,17 @@ public class ArticleDetailPresenter extends BasePresenter<IArticleDetailModel, I
     // 页面onPause时暂停播放
     public void onPause() {
         if (mSpeechSynthesizer != null) {
-            if (isStart) {
+            // 如果语音合成已经开始 且不是因为点击查看大图导致触发该声明周期 应暂停语音合成播放
+            if (isStart && !isClickImage) {
                 mSpeechSynthesizer.pauseSpeaking();
                 isPause = true;
-                view().setPlayButtonText("开始");
+                view().setPlayButtonType(TYPE_PLAY);
             }
         }
+    }
+
+    public void onResume() {
+        isClickImage = false;
     }
 
     public void setArticleId(String articleId) {
@@ -93,18 +102,18 @@ public class ArticleDetailPresenter extends BasePresenter<IArticleDetailModel, I
             if (paragraphs == null || paragraphs.isEmpty())
                 return;
             isStart = true;
-            view().setPlayButtonText("暂停");
+            view().setPlayButtonType(TYPE_PAUSE);
             // 执行语音合成 在合成回调complete是currentParagraphIndex自增1
             handleSpeak();
         } else {
             if (!isPause) { // 如果已经开始播放 点击则暂停播放
                 isPause = true;
                 mSpeechSynthesizer.pauseSpeaking();
-                view().setPlayButtonText("开始");
+                view().setPlayButtonType(TYPE_PLAY);
             } else { // 如果已经暂停播放 点击则恢复播放
                 isPause = false;
                 mSpeechSynthesizer.resumeSpeaking();
-                view().setPlayButtonText("暂停");
+                view().setPlayButtonType(TYPE_PAUSE);
             }
         }
     }
@@ -131,7 +140,7 @@ public class ArticleDetailPresenter extends BasePresenter<IArticleDetailModel, I
                         currentParagraphIndex = 0;
                         isPause = false;
                         isStart = false;
-                        view().hidePlayButtonText();
+                        view().hidePlayer();
 
                     }
 
@@ -147,11 +156,14 @@ public class ArticleDetailPresenter extends BasePresenter<IArticleDetailModel, I
                         MLog.json(TAG, GsonHelper.GetCommonGson().toJson(article));
                         if (article.getArticle() == null || article.getArticle().isEmpty()) {
                             view().showArticleEmptyView();
-                            view().hidePlayButtonText();
+                            view().hidePlayer();
                         } else {
                             view().hideArticleEmptyView();
-                            view().setPlayButtonText("开始");
+                            view().showPlayer();
+                            view().setPlayButtonType(TYPE_PLAY);
                             view().setReferer(article.spiderUrl);
+                            view().setArticleHeader(article.title, article.source, article.pbTime);
+                            view().setCover(article.spiderUrl, article.thumbPicUrl);
                             referer = article.spiderUrl;
                             view().setDataToView(article.getArticle());
                         }
@@ -170,6 +182,9 @@ public class ArticleDetailPresenter extends BasePresenter<IArticleDetailModel, I
             }
         } else {
             MLog.e(TAG, "全部播放完成");
+            // 重置播放索引
+            currentParagraphIndex = 0;
+            view().setPlayButtonType(TYPE_PLAY);
         }
     }
 
@@ -241,6 +256,7 @@ public class ArticleDetailPresenter extends BasePresenter<IArticleDetailModel, I
     };
 
     public void onImageClick(int imagePosition) {
+        isClickImage = true;
         HashMap<String, String> header = new HashMap<>();
         header.put("referer", referer);
         view().watchImage(imagePosition, header);

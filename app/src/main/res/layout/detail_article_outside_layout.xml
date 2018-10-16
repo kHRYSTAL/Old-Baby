@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.oldbaby.common.view.zoompage.PinchZoomPage xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/zoomPage"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fillViewport="true">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+        <!-- body -->
+        <com.oldbaby.common.view.zoompage.OutsideDownFrameLayout
+            android:id="@+id/downFrameLayout"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:id="@+id/llheader"
+                    android:layout_width="match_parent"
+                    android:layout_height="168dp"
+                    android:orientation="vertical">
+
+                </LinearLayout>
+
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@color/white"
+                    android:orientation="vertical"
+                    android:paddingLeft="10dp"
+                    android:paddingRight="10dp"
+                    android:paddingTop="27dp">
+                    <!-- 文章标题 来源header -->
+                    <include layout="@layout/detail_article_header_layout" />
+                    <!-- 填充 Block的容器 -->
+                    <LinearLayout
+                        android:id="@+id/llContainer"
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        android:layout_marginTop="38dp"
+                        android:layout_weight="1"
+                        android:background="@color/white"
+                        android:orientation="vertical"></LinearLayout>
+                </LinearLayout>
+
+                <!--播放器占位-->
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="120dp"
+                    android:background="@color/white" />
+            </LinearLayout>
+        </com.oldbaby.common.view.zoompage.OutsideDownFrameLayout>
+    </LinearLayout>
+</com.oldbaby.common.view.zoompage.PinchZoomPage>

@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/rlInsideLayout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#000"
+    android:orientation="vertical">
+
+    <com.oldbaby.common.view.zoompage.InsideHeaderLayout
+        android:id="@+id/insideLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <!--封面-->
+        <ImageView
+            android:id="@+id/ivCover"
+            android:src="@drawable/tab_background"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="#757575"
+            android:minHeight="200dp"
+            android:scaleType="centerCrop" />
+    </com.oldbaby.common.view.zoompage.InsideHeaderLayout>
+    <!-- 收起按钮 -->
+    <RelativeLayout
+        android:id="@+id/rlClose"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:layout_alignParentBottom="true">
+
+        <ImageView
+            android:layout_width="30dp"
+            android:layout_height="20dp"
+            android:layout_centerInParent="true"
+            android:src="@drawable/img_btn_return_top_photo" />
+    </RelativeLayout>
+</RelativeLayout>
