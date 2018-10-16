@@ -20,7 +20,8 @@
         <com.oldbaby.common.media.OBPlayerStd
             android:id="@+id/videoplayer"
             android:layout_width="match_parent"
-            android:layout_height="240dp"></com.oldbaby.common.media.OBPlayerStd>
+            android:layout_height="240dp">
+        </com.oldbaby.common.media.OBPlayerStd>
 
         <RelativeLayout
             android:id="@+id/rlVideoContainer"
