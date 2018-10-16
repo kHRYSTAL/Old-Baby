@@ -64,6 +64,8 @@ dependencies {
     implementation rootProject.permission
     implementation rootProject.butterknife
     implementation rootProject.picasso
+    implementation rootProject.ijkplayer
+    implementation rootProject.ijkplayer_arm
     annotationProcessor rootProject.butterknifecompile
     annotationProcessor rootProject.glidecompile
 }

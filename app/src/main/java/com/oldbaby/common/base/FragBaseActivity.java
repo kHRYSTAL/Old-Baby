@@ -33,6 +33,7 @@ public abstract class FragBaseActivity extends BaseFragmentActivity implements O
     private TitleBarProxy titleBar;
     private DefaultTitleBarClickListener defaultTitleBarListener;
     private boolean isLogicDestroyed = false;
+    private ImmersionBar immersionBar;
 
     public TitleBarProxy getTitleBar() {
         if (titleBar == null)
@@ -47,6 +48,7 @@ public abstract class FragBaseActivity extends BaseFragmentActivity implements O
     @Override
     public void onContinueCreate(Bundle savedInstanceState) {
         super.onContinueCreate(savedInstanceState);
+        immersionBar = ImmersionBar.with(this);
         buildFragView();
     }
 
@@ -64,6 +66,8 @@ public abstract class FragBaseActivity extends BaseFragmentActivity implements O
     protected void onDestroy() {
         this.isLogicDestroyed = true;
         super.onDestroy();
+        if (immersionBar != null)
+            immersionBar.destroy();
     }
 
     private void buildFragView() {
@@ -182,7 +186,8 @@ public abstract class FragBaseActivity extends BaseFragmentActivity implements O
         View statusBar = findViewById(R.id.status_bar);
         statusBar.setBackgroundResource(resId);
         statusBar.setVisibility(View.VISIBLE);
-        ImmersionBar.with(this).keyboardEnable(true).init();
+        immersionBar.keyboardEnable(true).init();
+
     }
 
     // 修改标题栏颜色
@@ -201,6 +206,6 @@ public abstract class FragBaseActivity extends BaseFragmentActivity implements O
 
     @Override
     public void hideStatusBar() {
-        ImmersionBar.with(this).keyboardEnable(true).hideBar(BarHide.FLAG_HIDE_STATUS_BAR).init();
+        immersionBar.keyboardEnable(true).hideBar(BarHide.FLAG_HIDE_STATUS_BAR).init();
     }
 }

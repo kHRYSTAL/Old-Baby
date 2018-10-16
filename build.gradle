@@ -59,5 +59,7 @@ ext {
     picasso = 'com.squareup.picasso:picasso:2.5.2'
 
     permission = 'com.yanzhenjie:permission:2.0.0-rc12'
+    ijkplayer = 'tv.danmaku.ijk.media:ijkplayer-java:0.8.4'
+    ijkplayer_arm = 'tv.danmaku.ijk.media:ijkplayer-armv7a:0.8.4'
 
 }
