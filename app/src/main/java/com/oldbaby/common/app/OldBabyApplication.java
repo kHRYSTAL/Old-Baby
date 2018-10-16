@@ -6,6 +6,7 @@ import com.iflytek.cloud.SpeechUtility;
 import com.oldbaby.R;
 import com.oldbaby.common.app.lifecycle.LifeCycleMgr;
 import com.oldbaby.common.dto.DBMgr;
+import com.oldbaby.common.media.MediaIjkPlayer;
 import com.oldbaby.common.retrofit.HeaderInterceptor;
 import com.oldbaby.common.retrofit.RetrofitFactory;
 import com.oldbaby.common.retrofit.gson.GsonCreater;
@@ -26,6 +27,8 @@ import com.oldbaby.tracker.util.TrackerMgr;
 import com.tencent.mmkv.MMKV;
 
 import java.io.Serializable;
+
+import cn.jzvd.Jzvd;
 
 /**
  * usage:
@@ -74,9 +77,14 @@ public class OldBabyApplication extends OGApplication {
         configTinker(); // 配置热修复
         configRetrofit(); // 配置网络请求
         configPullToRefresh(); // 配置下拉刷新
+        configIjkPlayer(); // 替换播放内核为ijkplayer
         registerActivityLifecycleCallbacks(lifeCycleMgr);
         registerActivityLifecycleCallbacks(new TrackerLifeCycleMgr(OldBabyApplication.this));
         GsonHelper.SetCommonGson(GsonCreater.GreateGson());
+    }
+
+    private void configIjkPlayer() {
+        Jzvd.setMediaInterface(new MediaIjkPlayer());
     }
 
     private void configIFlyTek() {

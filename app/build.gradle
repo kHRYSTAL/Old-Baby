@@ -60,6 +60,7 @@ dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
     implementation project(':oblib')
     implementation rootProject.mmkv
+    implementation rootProject.cardView
     implementation rootProject.jiaozi
     implementation rootProject.permission
     implementation rootProject.butterknife
