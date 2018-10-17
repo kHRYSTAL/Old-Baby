@@ -8,9 +8,11 @@
         android:layout_height="match_parent">
 
         <ImageView
+            android:id="@+id/ivBackground"
             android:layout_width="match_parent"
-            android:layout_height="160dp"
-            android:background="@drawable/tab_background" />
+            android:layout_height="wrap_content"
+            android:background="@drawable/tab_background_common" />
+
         <include
             android:id="@+id/custom_title"
             layout="@layout/titlebar_with_image"

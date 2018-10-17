@@ -5,11 +5,12 @@
     </style>
 
     <!--替换parent 目的是为了使用自定义Snackbar-->
-    <style name="Theme" parent="Theme.AppCompat.Light.NoActionBar">
+    <style name="Theme" parent="AppTheme">
         <item name="android:windowTitleSize">@dimen/app_titlebar_height</item>
         <item name="android:windowTitleBackgroundStyle">@style/custom_title</item>
         <item name="android:background">@null</item>
         <item name="android:windowIsTranslucent">true</item>
+        <item name="android:windowFullscreen">true</item>
         <!--新增属性 statusbar颜色-->
         <item name="colorPrimaryDark">@color/black</item>
         <!--新增属性 button去掉阴影-->

@@ -26,6 +26,7 @@ import com.oldbaby.oblib.view.dialog.PromptDlgTwoBtnListener;
 import com.oldbaby.oblib.view.tab.TabBarOnCreateListener;
 import com.oldbaby.oblib.view.tab.TabBarView;
 import com.oldbaby.oblib.view.tab.TabInfo;
+import com.oldbaby.profile.view.impl.FragProfileTab;
 import com.oldbaby.tabhome.model.HomeModelFactory;
 import com.oldbaby.tabhome.presenter.TabHomePresenter;
 import com.oldbaby.tabhome.view.ITabHomeView;
@@ -66,7 +67,7 @@ public class FragTabHome extends FragTabPageMvps implements ITabHomeView {
 
     FragFeedTab fragFeed; // feed流
     FragVideoTab fragVideo; // 视频流
-    Fragment fragProfile; // 个人中心
+    FragProfileTab fragProfile; // 个人中心
 
     ArrayList<TabInfo> tabs; // tab集合 按照从左到右顺序
 
@@ -187,7 +188,7 @@ public class FragTabHome extends FragTabPageMvps implements ITabHomeView {
                 return fragVideo;
             }
             case TAB_ID_PROFILE: {
-                fragProfile = new Fragment();
+                fragProfile = new FragProfileTab();
                 return fragProfile;
             }
 
@@ -215,7 +216,7 @@ public class FragTabHome extends FragTabPageMvps implements ITabHomeView {
     @Override
     protected boolean needPreLoad(TabInfo tabInfo) {
         if (tabInfo != null) {
-            //如果tab为 邻里、人脉、我的,则预加载
+            //如果tab为 邻里、人脉,则预加载
             if (tabInfo.tabId == TAB_ID_FEED || tabInfo.tabId == TAB_ID_VIDEO) {
                 return true;
             }

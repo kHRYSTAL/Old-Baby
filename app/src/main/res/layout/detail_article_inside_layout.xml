@@ -13,7 +13,7 @@
         <!--封面-->
         <ImageView
             android:id="@+id/ivCover"
-            android:src="@drawable/tab_background"
+            android:src="@drawable/tab_background_common"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="#757575"
