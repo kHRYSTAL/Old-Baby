@@ -17,6 +17,7 @@ import com.oldbaby.R;
 import com.oldbaby.common.view.glidetransform.GlideTransformFactory;
 import com.oldbaby.oblib.mvp.presenter.BasePresenter;
 import com.oldbaby.oblib.mvp.view.FragBaseMvps;
+import com.oldbaby.oblib.util.StringUtil;
 import com.oldbaby.profile.model.impl.ProfileTabModel;
 import com.oldbaby.profile.presenter.ProfileTabPresenter;
 import com.oldbaby.profile.view.IProfileTabView;
@@ -103,5 +104,11 @@ public class FragProfileTab extends FragBaseMvps implements IProfileTabView {
     @Override
     public String getPageName() {
         return PAGE_NAME;
+    }
+
+    @Override
+    public void setThemeBtnText(String text) {
+        if (!StringUtil.isNullOrEmpty(text))
+            btnChange.setText(text);
     }
 }

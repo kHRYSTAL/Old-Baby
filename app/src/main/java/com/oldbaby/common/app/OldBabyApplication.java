@@ -29,6 +29,7 @@ import com.tencent.mmkv.MMKV;
 import java.io.Serializable;
 
 import cn.jzvd.Jzvd;
+import skin.support.SkinCompatManager;
 
 /**
  * usage:
@@ -42,19 +43,19 @@ public class OldBabyApplication extends OGApplication {
     private LifeCycleMgr lifeCycleMgr = new LifeCycleMgr();
 
     public static void trackerClickEvent(String pageName, String type, String alias) {
-        if (APP_CONTEXT instanceof  OldBabyApplication) {
+        if (APP_CONTEXT instanceof OldBabyApplication) {
             ((OldBabyApplication) APP_CONTEXT).trackerClick(pageName, type, alias, null, null);
         }
     }
 
     public static void trackerClickEvent(String pageName, String type, String alias, String param) {
-        if (APP_CONTEXT instanceof  OldBabyApplication) {
+        if (APP_CONTEXT instanceof OldBabyApplication) {
             ((OldBabyApplication) APP_CONTEXT).trackerClick(pageName, type, alias, param, null);
         }
     }
 
     public static void trackerClickEvent(String pageName, String type, String alias, String param, String userInfo) {
-        if (APP_CONTEXT instanceof  OldBabyApplication) {
+        if (APP_CONTEXT instanceof OldBabyApplication) {
             ((OldBabyApplication) APP_CONTEXT).trackerClick(pageName, type, alias, param, userInfo);
         }
     }
@@ -78,9 +79,15 @@ public class OldBabyApplication extends OGApplication {
         configRetrofit(); // 配置网络请求
         configPullToRefresh(); // 配置下拉刷新
         configIjkPlayer(); // 替换播放内核为ijkplayer
+        configSkin();
         registerActivityLifecycleCallbacks(lifeCycleMgr);
         registerActivityLifecycleCallbacks(new TrackerLifeCycleMgr(OldBabyApplication.this));
         GsonHelper.SetCommonGson(GsonCreater.GreateGson());
+    }
+
+    private void configSkin() {
+        SkinCompatManager.withoutActivity(this)
+                .loadSkin();
     }
 
     private void configIjkPlayer() {
@@ -210,6 +217,7 @@ public class OldBabyApplication extends OGApplication {
 
     /**
      * 前台切换后台 或后台切换前台 需要告知服务器
+     *
      * @param type
      */
     private void switchFrontOrBackDesk(String type) {

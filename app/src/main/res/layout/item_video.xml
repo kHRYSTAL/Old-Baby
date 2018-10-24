@@ -5,7 +5,7 @@
     android:layout_height="wrap_content"
     android:orientation="vertical">
 
-    <android.support.v7.widget.CardView
+    <skin.support.widget.SkinCompatCardView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginLeft="14dp"
@@ -20,8 +20,7 @@
         <com.oldbaby.common.media.OBPlayerStd
             android:id="@+id/videoplayer"
             android:layout_width="match_parent"
-            android:layout_height="240dp">
-        </com.oldbaby.common.media.OBPlayerStd>
+            android:layout_height="240dp"></com.oldbaby.common.media.OBPlayerStd>
 
         <RelativeLayout
             android:id="@+id/rlVideoContainer"
@@ -39,8 +38,8 @@
                 android:id="@+id/tvVideoTitle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:maxLines="2"
                 android:ellipsize="end"
+                android:maxLines="2"
                 android:text="第三届亚残奥会在雅加达闭幕"
                 android:textColor="@color/white"
                 android:textSize="@dimen/txt_22" />
@@ -65,5 +64,5 @@
                 android:textColor="@color/color_f5"
                 android:textSize="@dimen/txt_12" />
         </RelativeLayout>
-    </android.support.v7.widget.CardView>
+    </skin.support.widget.SkinCompatCardView>
 </LinearLayout>

@@ -14,8 +14,7 @@
         android:id="@+id/fake_tab_bar"
         android:layout_width="fill_parent"
         android:layout_height="60dp"
-        android:layout_alignParentBottom="true"
-        android:background="@drawable/tab_navigation_left" />
+        android:layout_alignParentBottom="true" />
 
     <com.oldbaby.oblib.view.tab.TabBarView
         android:id="@id/frag_tab_page_tab"

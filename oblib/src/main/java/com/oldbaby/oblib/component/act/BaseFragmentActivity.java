@@ -43,6 +43,7 @@ import java.util.List;
 
 import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action1;
+import skin.support.app.SkinCompatActivity;
 
 /**
  * usage: Activity根基类

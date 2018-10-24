@@ -35,4 +35,6 @@ dependencies {
     api rootProject.converterGson
     api rootProject.ormliteAndroid
     api rootProject.ormliteCore
+    api rootProject.skinSupportV7
+    api rootProject.skinSupportCardView
 }

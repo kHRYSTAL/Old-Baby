@@ -10,4 +10,5 @@ import com.oldbaby.oblib.mvp.view.IMvpView;
  * email: 723526676@qq.com
  */
 public interface IProfileTabView extends IMvpView {
+    void setThemeBtnText(String text);
 }
