@@ -63,7 +63,7 @@
                     android:id="@+id/tvCollect"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="收藏"
+                    android:text="选择发音人"
                     android:textColor="@color/color_f6"
                     android:textSize="@dimen/txt_22"
                     android:textStyle="bold" />

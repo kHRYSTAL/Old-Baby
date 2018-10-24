@@ -18,12 +18,14 @@ import java.util.List;
 public interface IArticleDetailView extends IMvpView {
     // 显示错误布局
     void showArticleErrorView();
+
     // 隐藏错误布局
     void hideArticleErrorView();
+
     void showArticleEmptyView();
+
     void hideArticleEmptyView();
-    // 点击语音合成
-    void onSpeechSynthesizerClick();
+
     // 获取文章全部文字列表
     List<String> getArticleDetailTexts();
 
@@ -32,7 +34,9 @@ public interface IArticleDetailView extends IMvpView {
     void setDataToView(List<PageItem> items);
 
     void setPlayButtonType(int type);
+
     void hidePlayer();
+
     void showPlayer();
 
     void startSpeak(int pos);
@@ -46,5 +50,9 @@ public interface IArticleDetailView extends IMvpView {
     void setArticleHeader(String title, String source, String pbTime);
 
     void setCover(String refer, String url);
+
+    void keepScreenOn();
+
+    void clearScreenOn();
 
 }

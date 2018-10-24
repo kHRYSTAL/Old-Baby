@@ -98,6 +98,7 @@ public class ArticleDetailPresenter extends BasePresenter<IArticleDetailModel, I
 
     public void onSpeechSynthesizerClick() {
         if (!isStart) { // 如果还没开始播放 点击则开始播放 按钮置为暂停
+            // 设置屏幕常亮
             paragraphs = view().getArticleDetailTexts();
             if (paragraphs == null || paragraphs.isEmpty())
                 return;

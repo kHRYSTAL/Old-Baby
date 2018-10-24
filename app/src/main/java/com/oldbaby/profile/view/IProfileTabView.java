@@ -11,4 +11,6 @@ import com.oldbaby.oblib.mvp.view.IMvpView;
  */
 public interface IProfileTabView extends IMvpView {
     void setThemeBtnText(String text);
+
+    void showSpeechPersonDialog();
 }

@@ -1,6 +1,7 @@
 package com.oldbaby.profile.view.impl;
 
 import android.annotation.SuppressLint;
+import android.app.Dialog;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
@@ -14,6 +15,7 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.oldbaby.R;
+import com.oldbaby.common.util.DialogUtil;
 import com.oldbaby.common.view.glidetransform.GlideTransformFactory;
 import com.oldbaby.oblib.mvp.presenter.BasePresenter;
 import com.oldbaby.oblib.mvp.view.FragBaseMvps;
@@ -110,5 +112,10 @@ public class FragProfileTab extends FragBaseMvps implements IProfileTabView {
     public void setThemeBtnText(String text) {
         if (!StringUtil.isNullOrEmpty(text))
             btnChange.setText(text);
+    }
+
+    @Override
+    public void showSpeechPersonDialog() {
+        DialogUtil.getInstatnce().showSpeechSelectDialog(getActivity());
     }
 }

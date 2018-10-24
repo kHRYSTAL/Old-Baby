@@ -2,12 +2,12 @@ package com.oldbaby.article.view.impl;
 
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -54,6 +54,7 @@ import java.util.Map;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import cn.jzvd.JZUtils;
 
 /**
  * usage: 文章详情页
@@ -212,8 +213,49 @@ public class FragArticleDetail extends FragBaseMvps implements IArticleDetailVie
             @Override
             public void onPlayClick() {
                 // 点击播放按钮
-                if (presenter != null)
-                    presenter.onSpeechSynthesizerClick();
+                // 需要录音授权
+                AndPermission.with(getActivity()).runtime()
+                        .permission(Permission.RECORD_AUDIO)
+                        .rationale(mRationale)
+                        .onGranted(new Action<List<String>>() {
+                            @Override
+                            public void onAction(List<String> data) {
+                                if (presenter != null)
+                                    presenter.onSpeechSynthesizerClick();
+                            }
+                        })
+                        .onDenied(new Action<List<String>>() {
+                            @Override
+                            public void onAction(List<String> permissions) {
+
+                                if (AndPermission.hasAlwaysDeniedPermission(getActivity(), permissions)) {
+                                    // 这些权限被用户总是拒绝。
+                                    PromptDlgAttr promptDlgAttr = new PromptDlgAttr();
+                                    promptDlgAttr.title = "无法继续运行";
+                                    promptDlgAttr.subTitle = "请去设置页进行授权";
+                                    promptDlgAttr.cancelable = false;
+                                    promptDlgAttr.showClose = false;
+
+                                    promptDlgAttr.btnText = "立即授权";
+                                    promptDlgAttr.btnBgResId = R.drawable.sel_btn_sc_bg;
+                                    showPromptDlg(TAG_DIALOG_PROMPT_SETTING, promptDlgAttr, new PromptDlgListener() {
+                                        @Override
+                                        public void onPromptClicked(Context context, String tag, Object arg) {
+                                            hidePromptDlg(TAG_DIALOG_PROMPT_SETTING);
+                                            AndPermission.with(getActivity())
+                                                    .runtime()
+                                                    .setting()
+                                                    .onComeback(new Setting.Action() {
+                                                        @Override
+                                                        public void onAction() {
+                                                            // 用户从设置回来了。
+                                                        }
+                                                    }).start();
+                                        }
+                                    });
+                                }
+                            }
+                        }).start();
             }
         });
     }
@@ -259,52 +301,6 @@ public class FragArticleDetail extends FragBaseMvps implements IArticleDetailVie
         errorView.setVisibility(View.GONE);
         emptyView.setVisibility(View.GONE);
         pageContainer.setVisibility(View.VISIBLE);
-    }
-
-    @Override
-    public void onSpeechSynthesizerClick() {
-        // 需要录音授权
-        AndPermission.with(getActivity()).runtime()
-                .permission(Permission.RECORD_AUDIO)
-                .rationale(mRationale)
-                .onGranted(new Action<List<String>>() {
-                    @Override
-                    public void onAction(List<String> data) {
-                        presenter.onSpeechSynthesizerClick();
-                    }
-                })
-                .onDenied(new Action<List<String>>() {
-                    @Override
-                    public void onAction(List<String> permissions) {
-
-                        if (AndPermission.hasAlwaysDeniedPermission(getActivity(), permissions)) {
-                            // 这些权限被用户总是拒绝。
-                            PromptDlgAttr promptDlgAttr = new PromptDlgAttr();
-                            promptDlgAttr.title = "无法继续运行";
-                            promptDlgAttr.subTitle = "请去设置页进行授权";
-                            promptDlgAttr.cancelable = false;
-                            promptDlgAttr.showClose = false;
-
-                            promptDlgAttr.btnText = "立即授权";
-                            promptDlgAttr.btnBgResId = R.drawable.sel_btn_sc_bg;
-                            showPromptDlg(TAG_DIALOG_PROMPT_SETTING, promptDlgAttr, new PromptDlgListener() {
-                                @Override
-                                public void onPromptClicked(Context context, String tag, Object arg) {
-                                    hidePromptDlg(TAG_DIALOG_PROMPT_SETTING);
-                                    AndPermission.with(getActivity())
-                                            .runtime()
-                                            .setting()
-                                            .onComeback(new Setting.Action() {
-                                                @Override
-                                                public void onAction() {
-                                                    // 用户从设置回来了。
-                                                }
-                                            }).start();
-                                }
-                            });
-                        }
-                    }
-                }).start();
     }
 
     @Override
@@ -405,6 +401,16 @@ public class FragArticleDetail extends FragBaseMvps implements IArticleDetailVie
             Headers headers = SpiderHeader.getInstance().addRefer(refer).build();
             Glide.with(getContext()).load(new GlideUrl(url, headers)).into(ivCover);
         }
+    }
+
+    @Override
+    public void keepScreenOn() {
+        JZUtils.scanForActivity(getContext()).getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
+    }
+
+    @Override
+    public void clearScreenOn() {
+        JZUtils.scanForActivity(getContext()).getWindow().clearFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
     }
 
     private Rationale mRationale = new Rationale() {

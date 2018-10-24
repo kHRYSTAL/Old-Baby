@@ -4,6 +4,7 @@ import android.os.Environment;
 
 import com.iflytek.cloud.SpeechConstant;
 import com.iflytek.cloud.SpeechSynthesizer;
+import com.oldbaby.common.app.PrefUtil;
 
 /**
  * usage: TODO 在加入设置页后 字符串选择可改用MMKV获取默认配置
@@ -21,7 +22,7 @@ public class IFlySpeechConfigUtil {
         //on event回调接口实时返回音频流数据
         //mTts.setParameter(SpeechConstant.TTS_DATA_NOTIFY, "1");
         // 设置在线合成发音人
-        speechSynthesizer.setParameter(SpeechConstant.VOICE_NAME, "xiaoyan");
+        speechSynthesizer.setParameter(SpeechConstant.VOICE_NAME, PrefUtil.Instance().getSpeechPersonName());
         //设置合成语速
         speechSynthesizer.setParameter(SpeechConstant.SPEED, "50");
         //设置合成音调

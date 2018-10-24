@@ -58,6 +58,6 @@ public class ProfileTabPresenter extends BasePresenter<IProfileTabModel, IProfil
     }
 
     public void onClickCollect() {
-        ToastUtil.showShort("暂不支持");
+        view().showSpeechPersonDialog();
     }
 }

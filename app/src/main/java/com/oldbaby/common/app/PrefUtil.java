@@ -1,5 +1,8 @@
 package com.oldbaby.common.app;
 
+import android.content.Context;
+
+import com.oldbaby.R;
 import com.tencent.mmkv.MMKV;
 
 /**
@@ -30,6 +33,8 @@ public class PrefUtil {
     private static final String PREF_UID = "pref_uid";
     private static final String ZOOM_PAGE_TEXT_SIZE = "zoom_page_text_size";
     private static final String ZOOM_PAGE_TEXT_RATIO = "zoom_page_text_ratio";
+    private static final String SPEECH_PERSON_INDEX = "speech_person_index";
+    private static final String SPEECH_PERSON_NAME = "speech_person_name";
 
     public void setToken(String token) {
         MMKV.defaultMMKV().encode(PREF_TOKEN, token);
@@ -64,12 +69,31 @@ public class PrefUtil {
         return MMKV.defaultMMKV().decodeFloat(ZOOM_PAGE_TEXT_RATIO, 1.0f);
     }
 
+    public void setSpeechPersonIndex(int index) {
+        MMKV.defaultMMKV().encode(SPEECH_PERSON_INDEX, index);
+    }
+
+    public int getSpeechPersonIndex() {
+        return MMKV.defaultMMKV().decodeInt(SPEECH_PERSON_INDEX, 0);
+    }
+
+    public void setSpeechPersonName(String name) {
+        MMKV.defaultMMKV().encode(SPEECH_PERSON_NAME, name);
+    }
+
+    public String getSpeechPersonName() {
+        return MMKV.defaultMMKV().decodeString(SPEECH_PERSON_NAME,
+                "xiaoyan");
+    }
+
     public void clearAll() {
         MMKV.defaultMMKV().removeValuesForKeys(new String[]{
                 PREF_TOKEN,
                 PREF_UID,
                 ZOOM_PAGE_TEXT_RATIO,
-                ZOOM_PAGE_TEXT_SIZE
+                ZOOM_PAGE_TEXT_SIZE,
+                SPEECH_PERSON_INDEX,
+                SPEECH_PERSON_NAME
         });
     }
 }

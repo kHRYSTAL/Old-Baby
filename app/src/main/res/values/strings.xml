@@ -1,4 +1,39 @@
 <resources>
-    <string name="app_name">oldbaby</string>
+    <string name="app_name">老年生活</string>
     <string name="iflytek_appid">5baee84b</string>
+
+    <string-array name="voicer_cloud_entries">
+        <item>小燕—男普通话</item>
+        <item>小宇—男普通话</item>
+        <item>小研—女普通话</item>
+        <item>小琪—女普通话</item>
+        <item>小峰—男普通话</item>
+        <item>小梅—女粤语</item>
+        <item>小莉—女台湾普通话</item>
+        <item>小蓉—女四川话</item>
+        <item>小芸—女东北话</item>
+        <item>小坤—男河南话</item>
+        <item>小强—男湖南话</item>
+        <item>小莹—女陕西话</item>
+        <item>小新—男普通话</item>
+        <item>楠楠—女普通话</item>
+        <item>老孙—男普通话</item>
+    </string-array>
+    <string-array name="voicer_cloud_values">
+        <item>xiaoyan</item>
+        <item>xiaoyu</item>
+        <item>vixy</item>
+        <item>xiaoqi</item>
+        <item>vixf</item>
+        <item>xiaomei</item>
+        <item>xiaolin</item>
+        <item>xiaorong</item>
+        <item>xiaoqian</item>
+        <item>xiaokun</item>
+        <item>xiaoqiang</item>
+        <item>vixying</item>
+        <item>xiaoxin</item>
+        <item>nannan</item>
+        <item>vils</item>
+    </string-array>
 </resources>
