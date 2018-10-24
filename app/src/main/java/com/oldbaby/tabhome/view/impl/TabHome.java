@@ -38,7 +38,7 @@ public class TabHome extends FragBaseActivity {
     @Override
     public void onContinueCreate(Bundle savedInstanceState) {
         super.onContinueCreate(savedInstanceState);
-        ImmersionBar.with(this).fullScreen(true).init();
+//        ImmersionBar.with(this).fullScreen(true).init();
         //TODO 在splash添加后处理intent操作与rxbus操作
         addFragment();
     }

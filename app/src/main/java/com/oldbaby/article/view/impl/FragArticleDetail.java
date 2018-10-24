@@ -142,7 +142,7 @@ public class FragArticleDetail extends FragBaseMvps implements IArticleDetailVie
         ButterKnife.bind(this, rootView);
         initViews(rootView);
         //
-        ImmersionBar.with(this).fullScreen(true).init();
+//        ImmersionBar.with(this).fullScreen(true).init();
         return rootView;
     }
 
