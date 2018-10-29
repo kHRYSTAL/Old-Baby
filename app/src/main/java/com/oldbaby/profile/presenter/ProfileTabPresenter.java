@@ -32,12 +32,13 @@ public class ProfileTabPresenter extends BasePresenter<IProfileTabModel, IProfil
             @Override
             public void onSuccess() {
                 updateView();
+                view().hideProgressDlg();
             }
 
             @Override
             public void onFailed(String errMsg) {
                 updateView();
-
+                view().hideProgressDlg();
             }
         };
     }
@@ -51,6 +52,7 @@ public class ProfileTabPresenter extends BasePresenter<IProfileTabModel, IProfil
 
 
     public void onClickChange() {
+        view().showProgressDlg();
         if (SkinPreference.getInstance().getSkinName().equals(NIGHT_SKIN_NAME))
             SkinCompatManager.getInstance().loadSkin("", skinLoaderListener, SkinCompatManager.SKIN_LOADER_STRATEGY_NONE);
         else
